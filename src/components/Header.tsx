@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { motion } from "motion/react";
 import RequestAccessButton from "./RequestAccessButton";
 import PlatformSwitcher from "./PlatformSwitcher";
 
 /**
- * Sticky site header with logo, platform switcher, and request-access CTA.
+ * Sticky site header with app icon, platform switcher, and request-access CTA.
  * Gains a frosted background after the user scrolls.
  */
 export default function Header() {
@@ -34,29 +35,20 @@ export default function Header() {
       `}
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:h-[4.25rem] sm:px-6 lg:px-8">
-        {/* Logo / wordmark */}
+        {/* Logo / wordmark — app icon from /public/icon.jpg */}
         <a
           href="#top"
           className="group flex min-w-0 items-center gap-2.5"
           aria-label="Snap Collectibles home"
         >
-          <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-purple to-pink shadow-md transition-transform duration-300 group-hover:scale-105">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="white"
-              strokeWidth="2.2"
-              className="h-4 w-4"
-              aria-hidden="true"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
-              />
-              <circle cx="12" cy="13" r="3" />
-            </svg>
-          </span>
+          <Image
+            src="/icon.jpg"
+            alt="Snap Collectibles"
+            width={36}
+            height={36}
+            className="h-9 w-9 flex-shrink-0 rounded-xl object-cover shadow-md ring-1 ring-white/10 transition-transform duration-300 group-hover:scale-105"
+            priority
+          />
           <span className="truncate text-[15px] font-bold tracking-tight text-text sm:text-base">
             Snap{" "}
             <span className="text-gradient">Collectibles</span>

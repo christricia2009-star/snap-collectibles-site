@@ -1,10 +1,10 @@
 /**
- * Simple site footer with legal links and copyright.
- * Update support email and privacy URL as needed.
+ * Site footer with legal links and copyright.
  */
 
-const SUPPORT_EMAIL = "support@snapcollectibles.com";
-const PRIVACY_URL = "/privacy"; // TODO: replace with real privacy policy URL
+import Image from "next/image";
+import Link from "next/link";
+
 const SITE_URL = "https://snapcollectibles.com";
 
 export default function Footer() {
@@ -14,10 +14,19 @@ export default function Footer() {
     <footer className="border-t border-border-subtle bg-bg-elevated">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-4 py-10 sm:flex-row sm:px-6 lg:px-8">
         {/* Brand */}
-        <div className="flex flex-col items-center gap-1 sm:items-start">
-          <p className="text-sm font-semibold text-text">
-            Snap <span className="text-gradient">Collectibles</span>
-          </p>
+        <div className="flex flex-col items-center gap-2 sm:items-start">
+          <Link href="/" className="flex items-center gap-2">
+            <Image
+              src="/icon.jpg"
+              alt=""
+              width={28}
+              height={28}
+              className="h-7 w-7 rounded-lg object-cover ring-1 ring-white/10"
+            />
+            <p className="text-sm font-semibold text-text">
+              Snap <span className="text-gradient">Collectibles</span>
+            </p>
+          </Link>
           <a
             href={SITE_URL}
             className="text-xs text-text-dim transition-colors hover:text-text-muted"
@@ -33,29 +42,24 @@ export default function Footer() {
           className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-text-muted"
           aria-label="Footer"
         >
-          <a
-            href={PRIVACY_URL}
-            className="transition-colors hover:text-text"
-          >
+          <Link href="/privacy" className="transition-colors hover:text-text">
             Privacy
-          </a>
-          <a
-            href={`mailto:${SUPPORT_EMAIL}`}
-            className="transition-colors hover:text-text"
-          >
+          </Link>
+          <Link href="/support" className="transition-colors hover:text-text">
             Support
-          </a>
-          <a
-            href="#faq"
-            className="transition-colors hover:text-text"
-          >
+          </Link>
+          <Link href="/terms" className="transition-colors hover:text-text">
+            Terms
+          </Link>
+          <Link href="/#faq" className="transition-colors hover:text-text">
             FAQ
-          </a>
+          </Link>
         </nav>
 
         {/* Copyright */}
-        <p className="text-xs text-text-dim">
-          © {year} Snap Collectibles. All rights reserved.
+        <p className="text-center text-xs text-text-dim sm:text-right">
+          © {year} Snap Collectibles.
+          <br className="sm:hidden" /> All rights reserved.
         </p>
       </div>
     </footer>

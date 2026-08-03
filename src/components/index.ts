@@ -15,3 +15,4 @@ export { default as RequestAccessButton } from "./RequestAccessButton";
 export { default as PlatformSwitcher } from "./PlatformSwitcher";
 export { default as PhoneMockup } from "./PhoneMockup";
 export { default as SectionHeading } from "./SectionHeading";
+export { default as LegalPageShell } from "./LegalPageShell";

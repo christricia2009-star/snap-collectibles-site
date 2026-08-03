@@ -40,6 +40,10 @@ export const metadata: Metadata = {
       "Scan multiple items in one photo on iOS and Android. Catalog faster and know what your collection is worth. Request free beta access.",
   },
   metadataBase: new URL("https://snapcollectibles.com"),
+  icons: {
+    icon: "/icon.jpg",
+    apple: "/icon.jpg",
+  },
 };
 
 export const viewport: Viewport = {
