@@ -21,6 +21,11 @@ const faqs: FAQItem[] = [
       "Not yet — the app is currently in private TestFlight testing. Email Testing@snapcollectibles.com with your name, email, and a short note about what you collect (e.g. Funko, sports cards). We’ll send a free invite when spots are available.",
   },
   {
+    question: "Can it scan multiple items in one photo?",
+    answer:
+      "Yes — multi-item scanning is a core feature. Snap one photo of a shelf, stack, or display and Snap Collectibles detects and processes multiple items at once, so you catalog faster instead of scanning one piece at a time.",
+  },
+  {
     question: "What kinds of collectibles does Snap Collectibles support?",
     answer:
       "Snap Collectibles is built for a wide range of physical collectibles — trading cards, figures, sneakers, comics, memorabilia, and more. If it has a barcode or a clear photo, you can add it. Support expands as we grow the catalog.",
@@ -31,9 +36,9 @@ const faqs: FAQItem[] = [
       "We analyze recent eBay sold listings (comps) for similar items so you see what the market is actually paying — not just asking prices. Values update as new sales data comes in, helping you stay current.",
   },
   {
-    question: "Can it handle large collections?",
+    question: "Is it built for all size collections?",
     answer:
-      "Yes. The app is designed for collectors with hundreds or thousands of items. Search, tags, and filters stay fast so you can find anything quickly without spreadsheet chaos.",
+      "Yes. Whether you’re starting with a small shelf or managing thousands of items, multi-item scanning, search, tags, and filters stay fast so you can catalog and find anything without spreadsheet chaos.",
   },
   {
     question: "Is my collection data private?",

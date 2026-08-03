@@ -19,9 +19,9 @@ type Feature = {
 
 const features: Feature[] = [
   {
-    title: "Camera barcode & image scan",
+    title: "Multi-item scanning in one photo",
     description:
-      "Point your camera at a barcode or item photo. Snap Collectibles identifies it in seconds so you can catalog without typing.",
+      "Our flagship feature: detect and process multiple items from a single photo. Point at a shelf, stack, or display — catalog many pieces at once instead of endless one-by-one scans. Barcode scan included when you need a precise match.",
     accent: "from-purple/20 to-purple/5 text-purple-bright",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className="h-6 w-6">
@@ -33,7 +33,7 @@ const features: Feature[] = [
   {
     title: "Real-time market valuation",
     description:
-      "See what items actually sell for using eBay sold comps — not list prices. Stay current with live market data.",
+      "After a multi-item scan, see what each piece actually sells for using eBay sold comps — not list prices. Stay current with live market data.",
     accent: "from-gold/20 to-gold/5 text-gold",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className="h-6 w-6">
@@ -42,9 +42,9 @@ const features: Feature[] = [
     ),
   },
   {
-    title: "Built for large collections",
+    title: "Built for all size collections",
     description:
-      "Organize thousands of items with smart search, tags, and filters. Performance stays snappy whether you have 50 or 5,000 pieces.",
+      "From a starter shelf to thousands of pieces, multi-item scanning and smart search, tags, and filters keep cataloging fast — whether you have 50 or 5,000 items.",
     accent: "from-pink/20 to-pink/5 text-pink-hot",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className="h-6 w-6">
@@ -110,7 +110,7 @@ export default function Features() {
         <SectionHeading
           eyebrow="Features"
           title="Everything collectors need — nothing they don’t"
-          subtitle="From first scan to full portfolio value, Snap Collectibles is purpose-built for people who take their collections seriously."
+          subtitle="Multi-item scanning first — then real market values and tools that keep every collection organized, from starter shelves to serious portfolios."
         />
 
         <motion.div

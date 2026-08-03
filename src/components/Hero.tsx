@@ -50,8 +50,9 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
             className="text-4xl font-bold tracking-tight text-text sm:text-5xl lg:text-[3.5rem] lg:leading-[1.1]"
           >
-            Know what your{" "}
-            <span className="text-gradient">collection</span> is worth
+            Scan{" "}
+            <span className="text-gradient">multiple items</span> in a single
+            photo
           </motion.h1>
 
           <motion.p
@@ -60,9 +61,11 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
             className="mx-auto mt-5 max-w-lg text-base leading-relaxed text-text-muted sm:text-lg lg:mx-0"
           >
-            Scan barcodes or photos, pull real-time market values from eBay sold
-            comps, and organize thousands of items — all in one clean iOS app
-            built for serious collectors.
+            Multi-item scanning is the core of Snap Collectibles. Snap one photo
+            of a shelf or stack — we detect and process multiple items at once
+            so you catalog faster, skip one-by-one scanning, and know what
+            everything is worth with real-time eBay sold comps. Built for all
+            size collections.
           </motion.p>
 
           {/* Testing callout */}
@@ -105,7 +108,7 @@ export default function Hero() {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="mt-5 text-xs text-text-dim"
           >
-            Free TestFlight invite · Built for large collections
+            Free TestFlight invite · Multi-item scanning · Built for all size collections
           </motion.p>
         </div>
 

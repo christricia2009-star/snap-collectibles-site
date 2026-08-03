@@ -30,7 +30,7 @@ export default function Gallery() {
         <SectionHeading
           eyebrow="Product"
           title="A closer look at the experience"
-          subtitle="Real screens from Snap Collectibles — scan, value, organize, wishlist, sell, and manage everything in one place."
+          subtitle="Real screens from Snap Collectibles — multi-item scan, value, organize, wishlist, sell, and manage everything in one place."
         />
 
         <div className="mt-14 grid grid-cols-2 gap-5 sm:gap-6 lg:grid-cols-3 lg:gap-8">

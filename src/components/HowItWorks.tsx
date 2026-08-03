@@ -11,9 +11,9 @@ import SectionHeading from "./SectionHeading";
 const steps = [
   {
     step: "01",
-    title: "Scan or add an item",
+    title: "Scan multiple items at once",
     description:
-      "Use the camera to scan a barcode or snap a photo. Or add details manually when you prefer full control.",
+      "Snap one photo of a shelf or stack. We detect and process multiple items in a single shot so you build inventory faster — built for all size collections. Barcode scan and manual add are there when you want full control.",
     color: "text-purple-bright",
     ring: "ring-purple/30",
   },
@@ -42,7 +42,7 @@ export default function HowItWorks() {
         <SectionHeading
           eyebrow="How it works"
           title="Three steps to a smarter collection"
-          subtitle="No spreadsheets. No guesswork. Just scan, value, and stay organized."
+          subtitle="No spreadsheets. No one-by-one drudgery. Multi-item scan, real values, and stay organized."
         />
 
         <div className="relative mt-16 grid gap-8 md:grid-cols-3 md:gap-6">

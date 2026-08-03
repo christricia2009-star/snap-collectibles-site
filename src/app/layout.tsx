@@ -9,12 +9,13 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Snap Collectibles — Scan, Value & Organize Your Collection",
+  title: "Snap Collectibles — Multi-Item Scan, Value & Organize",
   description:
-    "Scan, value, and organize your collectibles with real-time eBay sold comps. Currently in private TestFlight testing — request free access at Testing@snapcollectibles.com.",
+    "Scan multiple items in a single photo. Catalog faster with multi-item detection, real-time eBay sold comps, and tools built for all size collections. Request free TestFlight access at Testing@snapcollectibles.com.",
   keywords: [
     "collectibles",
     "collection app",
+    "multi-item scanning",
     "barcode scanner",
     "eBay comps",
     "market value",
@@ -24,18 +25,18 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Snap Collectibles", url: "https://snapcollectibles.com" }],
   openGraph: {
-    title: "Snap Collectibles — Join the Beta",
+    title: "Snap Collectibles — Multi-Item Scanning Beta",
     description:
-      "Scan, value, and organize your collectibles. Currently in TestFlight testing — request free access.",
+      "Scan multiple items in one photo. Catalog faster and know what your collection is worth. Request free TestFlight access.",
     url: "https://snapcollectibles.com",
     siteName: "Snap Collectibles",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Snap Collectibles — Join the Beta",
+    title: "Snap Collectibles — Multi-Item Scanning Beta",
     description:
-      "Scan, value, and organize your collectibles. Currently in TestFlight testing — request free access.",
+      "Scan multiple items in one photo. Catalog faster and know what your collection is worth. Request free TestFlight access.",
   },
   metadataBase: new URL("https://snapcollectibles.com"),
 };

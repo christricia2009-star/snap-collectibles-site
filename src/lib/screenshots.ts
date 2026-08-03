@@ -11,8 +11,8 @@ export const screenshots = {
   },
   scan: {
     src: "/screenshots/Scan.png",
-    label: "Scan an item",
-    alt: "Snap Collectibles barcode and image scan screen",
+    label: "Multi-item scan",
+    alt: "Snap Collectibles multi-item photo and barcode scan screen",
   },
   marketValue: {
     // File on disk is MarketRates.png

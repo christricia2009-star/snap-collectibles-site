@@ -36,8 +36,9 @@ export default function FinalCTA() {
             <span className="text-gradient">collectors</span>
           </h2>
           <p className="mx-auto mt-4 max-w-lg text-base text-text-muted sm:text-lg">
-            Snap Collectibles is currently in private testing — not yet on the
-            App Store. Request a free TestFlight invite and get early access.
+            Multi-item scanning, real market values, and organization built for
+            all size collections — currently in private testing. Request a free
+            TestFlight invite and get early access.
           </p>
 
           <div className="mx-auto mt-6 max-w-md rounded-2xl border border-border-subtle bg-bg/60 px-4 py-4 text-left text-sm text-text-muted sm:px-5">
