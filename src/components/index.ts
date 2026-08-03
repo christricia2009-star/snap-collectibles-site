@@ -12,5 +12,6 @@ export { default as FinalCTA } from "./FinalCTA";
 export { default as Footer } from "./Footer";
 export { default as AppStoreButton } from "./AppStoreButton";
 export { default as RequestAccessButton } from "./RequestAccessButton";
+export { default as PlatformSwitcher } from "./PlatformSwitcher";
 export { default as PhoneMockup } from "./PhoneMockup";
 export { default as SectionHeading } from "./SectionHeading";

@@ -9,9 +9,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Snap Collectibles — Multi-Item Scan, Value & Organize",
+  title: "Snap Collectibles — Multi-Item Scan for iOS & Android",
   description:
-    "Scan multiple items in a single photo. Catalog faster with multi-item detection, real-time eBay sold comps, and tools built for all size collections. Request free TestFlight access at Testing@snapcollectibles.com.",
+    "Scan multiple items in a single photo on iOS and Android. Catalog faster with multi-item detection, real-time eBay sold comps, and tools built for all size collections. Request free beta access at Testing@snapcollectibles.com.",
   keywords: [
     "collectibles",
     "collection app",
@@ -21,22 +21,23 @@ export const metadata: Metadata = {
     "market value",
     "wishlist",
     "iOS",
-    "TestFlight",
+    "Android",
+    "beta",
   ],
   authors: [{ name: "Snap Collectibles", url: "https://snapcollectibles.com" }],
   openGraph: {
-    title: "Snap Collectibles — Multi-Item Scanning Beta",
+    title: "Snap Collectibles — Multi-Item Scanning for iOS & Android",
     description:
-      "Scan multiple items in one photo. Catalog faster and know what your collection is worth. Request free TestFlight access.",
+      "Scan multiple items in one photo on iOS and Android. Catalog faster and know what your collection is worth. Request free beta access.",
     url: "https://snapcollectibles.com",
     siteName: "Snap Collectibles",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Snap Collectibles — Multi-Item Scanning Beta",
+    title: "Snap Collectibles — Multi-Item Scanning for iOS & Android",
     description:
-      "Scan multiple items in one photo. Catalog faster and know what your collection is worth. Request free TestFlight access.",
+      "Scan multiple items in one photo on iOS and Android. Catalog faster and know what your collection is worth. Request free beta access.",
   },
   metadataBase: new URL("https://snapcollectibles.com"),
 };

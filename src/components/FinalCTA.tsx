@@ -2,13 +2,16 @@
 
 import { motion } from "motion/react";
 import RequestAccessButton from "./RequestAccessButton";
-import AppStoreButton from "./AppStoreButton";
+import PlatformSwitcher from "./PlatformSwitcher";
+import { usePlatform } from "@/lib/platform";
 import { TESTING_EMAIL } from "@/lib/testing";
 
 /**
- * Final conversion-focused CTA — request TestFlight access.
+ * Final conversion-focused CTA — request beta access for iOS or Android.
  */
 export default function FinalCTA() {
+  const { label: platformLabel } = usePlatform();
+
   return (
     <section id="download" className="relative overflow-hidden py-20 sm:py-28">
       <div
@@ -37,9 +40,13 @@ export default function FinalCTA() {
           </h2>
           <p className="mx-auto mt-4 max-w-lg text-base text-text-muted sm:text-lg">
             Multi-item scanning, real market values, and organization built for
-            all size collections — currently in private testing. Request a free
-            TestFlight invite and get early access.
+            all size collections — private beta on iOS and Android. Request free
+            access to test.
           </p>
+
+          <div className="mt-6 flex justify-center">
+            <PlatformSwitcher size="sm" />
+          </div>
 
           <div className="mx-auto mt-6 max-w-md rounded-2xl border border-border-subtle bg-bg/60 px-4 py-4 text-left text-sm text-text-muted sm:px-5">
             <p className="font-medium text-text">How to request access</p>
@@ -54,21 +61,26 @@ export default function FinalCTA() {
                 </a>
               </li>
               <li>
-                Include your <strong className="text-text">name</strong> and{" "}
-                <strong className="text-text">email</strong>
+                Include your <strong className="text-text">name</strong>,{" "}
+                <strong className="text-text">email</strong>, and{" "}
+                <strong className="text-text">platform</strong> (iOS or Android)
               </li>
               <li>
                 Tell us a bit about what you collect (Funko, sports cards, etc.)
               </li>
             </ol>
+            <p className="mt-3 text-xs text-text-dim">
+              Selected platform for the form:{" "}
+              <span className="font-medium text-text">{platformLabel}</span>
+            </p>
           </div>
 
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap">
-            <RequestAccessButton size="lg" label="Join the TestFlight" />
-            <AppStoreButton size="lg" disabled />
+          <div className="mt-8 flex flex-col items-center justify-center gap-3">
+            <RequestAccessButton size="lg" label="Request Access to Test" />
           </div>
           <p className="mt-5 text-xs text-text-dim">
-            iPhone · Free TestFlight invite · Coming soon to the App Store
+            iOS &amp; Android · Free beta invite · Not yet on App Store or Google
+            Play
           </p>
         </motion.div>
       </div>

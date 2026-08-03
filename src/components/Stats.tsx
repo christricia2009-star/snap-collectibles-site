@@ -100,8 +100,8 @@ export default function Stats() {
         </motion.div>
 
         <p className="mt-8 text-center text-[11px] text-text-dim">
-          * Early / illustrative metrics while we&apos;re in TestFlight — real
-          stats coming at public launch.
+          * Early / illustrative metrics while we&apos;re in private beta on iOS
+          &amp; Android — real stats coming at public launch.
         </p>
       </div>
     </section>

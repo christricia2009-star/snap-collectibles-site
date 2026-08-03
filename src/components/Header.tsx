@@ -3,9 +3,10 @@
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import RequestAccessButton from "./RequestAccessButton";
+import PlatformSwitcher from "./PlatformSwitcher";
 
 /**
- * Sticky site header with logo + request-access CTA.
+ * Sticky site header with logo, platform switcher, and request-access CTA.
  * Gains a frosted background after the user scrolls.
  */
 export default function Header() {
@@ -32,14 +33,14 @@ export default function Header() {
         }
       `}
     >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:h-[4.25rem] sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:h-[4.25rem] sm:px-6 lg:px-8">
         {/* Logo / wordmark */}
         <a
           href="#top"
-          className="group flex items-center gap-2.5"
+          className="group flex min-w-0 items-center gap-2.5"
           aria-label="Snap Collectibles home"
         >
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-purple to-pink shadow-md transition-transform duration-300 group-hover:scale-105">
+          <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-purple to-pink shadow-md transition-transform duration-300 group-hover:scale-105">
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -56,25 +57,25 @@ export default function Header() {
               <circle cx="12" cy="13" r="3" />
             </svg>
           </span>
-          <span className="text-[15px] font-bold tracking-tight text-text sm:text-base">
+          <span className="truncate text-[15px] font-bold tracking-tight text-text sm:text-base">
             Snap{" "}
             <span className="text-gradient">Collectibles</span>
           </span>
         </a>
 
-        {/* Nav + CTA */}
-        <nav className="flex items-center gap-3 sm:gap-5" aria-label="Primary">
+        {/* Nav + platform switcher + CTA */}
+        <nav className="flex items-center gap-2 sm:gap-4" aria-label="Primary">
           <a
             href="#features"
-            className="hidden text-sm font-medium text-text-muted transition-colors hover:text-text sm:inline"
+            className="hidden text-sm font-medium text-text-muted transition-colors hover:text-text md:inline"
           >
             Features
           </a>
           <a
-            href="#how-it-works"
-            className="hidden text-sm font-medium text-text-muted transition-colors hover:text-text md:inline"
+            href="#gallery"
+            className="hidden text-sm font-medium text-text-muted transition-colors hover:text-text lg:inline"
           >
-            How it works
+            Screens
           </a>
           <a
             href="#faq"
@@ -82,7 +83,10 @@ export default function Header() {
           >
             FAQ
           </a>
-          <RequestAccessButton size="sm" label="Join TestFlight" />
+          <div className="hidden sm:block">
+            <PlatformSwitcher size="sm" />
+          </div>
+          <RequestAccessButton size="sm" label="Request Access" />
         </nav>
       </div>
     </motion.header>

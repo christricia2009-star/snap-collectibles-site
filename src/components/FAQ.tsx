@@ -16,14 +16,19 @@ type FAQItem = {
 
 const faqs: FAQItem[] = [
   {
-    question: "Is Snap Collectibles available on the App Store?",
+    question: "Is Snap Collectibles on the App Store or Google Play?",
     answer:
-      "Not yet — the app is currently in private TestFlight testing. Email Testing@snapcollectibles.com with your name, email, and a short note about what you collect (e.g. Funko, sports cards). We’ll send a free invite when spots are available.",
+      "Not yet — both the iOS and Android apps are currently in private testing. Email Testing@snapcollectibles.com with your name, email, platform (iOS or Android), and a short note about what you collect. We’ll send a free invite when spots are available.",
   },
   {
     question: "Can it scan multiple items in one photo?",
     answer:
-      "Yes — multi-item scanning is a core feature. Snap one photo of a shelf, stack, or display and Snap Collectibles detects and processes multiple items at once, so you catalog faster instead of scanning one piece at a time.",
+      "Yes — multi-item scanning is a core feature on both platforms. Snap one photo of a shelf, stack, or display and Snap Collectibles detects and processes multiple items at once, so you catalog faster instead of scanning one piece at a time.",
+  },
+  {
+    question: "Which platforms are supported?",
+    answer:
+      "Snap Collectibles is available for testing on iOS (iPhone) and Android. Use the platform switcher on this page to preview screens for each, and tell us which platform you want when you request access.",
   },
   {
     question: "What kinds of collectibles does Snap Collectibles support?",
@@ -48,12 +53,7 @@ const faqs: FAQItem[] = [
   {
     question: "Is the beta free?",
     answer:
-      "Yes. TestFlight access is free while we’re in testing. Pricing for the public App Store release will be clear in-app before anything is charged.",
-  },
-  {
-    question: "Which devices are supported?",
-    answer:
-      "Snap Collectibles is built for iPhone (iOS). A camera is recommended for scanning, but you can also add items manually. We’ll share OS requirements with your TestFlight invite.",
+      "Yes. Beta access is free while we’re in testing on iOS and Android. Pricing for public store releases will be clear in-app before anything is charged.",
   },
 ];
 
@@ -118,13 +118,13 @@ export default function FAQ() {
         <SectionHeading
           eyebrow="FAQ"
           title="Questions, answered"
-          subtitle="Everything you need to know about the beta. Still stuck? Email Testing@snapcollectibles.com or support."
+          subtitle="Everything you need to know about the iOS & Android beta. Still stuck? Email Testing@snapcollectibles.com or support."
         />
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
+          viewport={{ once: true }}
           transition={{ duration: 0.5 }}
           className="mt-12 rounded-2xl border border-border-subtle bg-bg-card px-5 sm:px-7"
         >

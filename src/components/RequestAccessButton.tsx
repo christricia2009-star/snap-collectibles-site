@@ -1,15 +1,23 @@
 /**
- * Primary CTA — request TestFlight / beta access via email.
- * Prefills subject + body so users include name, email, and collecting interests.
+ * Primary CTA — request beta access via email.
+ * Prefills subject + body: Name, Email, Platform, collecting interests.
  */
 
-import { TESTING_MAILTO } from "@/lib/testing";
+"use client";
+
+import { usePlatform } from "@/lib/platform";
+import { getTestingMailto } from "@/lib/testing";
 
 type RequestAccessButtonProps = {
   size?: "sm" | "md" | "lg";
   className?: string;
   /** Optional label override */
   label?: string;
+  /**
+   * When true, uses platform context for the mailto body.
+   * Set false only if rendered outside PlatformProvider.
+   */
+  useSelectedPlatform?: boolean;
 };
 
 const sizeClasses = {
@@ -22,10 +30,16 @@ export default function RequestAccessButton({
   size = "md",
   className = "",
   label = "Request Access to Test",
+  useSelectedPlatform = true,
 }: RequestAccessButtonProps) {
+  const { platform, label: platformLabel } = usePlatform();
+  const href = useSelectedPlatform
+    ? getTestingMailto(platform)
+    : getTestingMailto("ios");
+
   return (
     <a
-      href={TESTING_MAILTO}
+      href={href}
       className={`
         group inline-flex items-center justify-center rounded-xl
         bg-gradient-to-r from-purple to-pink
@@ -37,9 +51,8 @@ export default function RequestAccessButton({
         ${sizeClasses[size]}
         ${className}
       `}
-      aria-label="Request access to test Snap Collectibles via email"
+      aria-label={`Request access to test Snap Collectibles on ${platformLabel} via email`}
     >
-      {/* Envelope icon */}
       <svg
         viewBox="0 0 24 24"
         fill="none"
