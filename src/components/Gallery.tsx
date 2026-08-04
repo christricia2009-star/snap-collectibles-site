@@ -25,7 +25,7 @@ export default function Gallery() {
         <SectionHeading
           eyebrow="Product"
           title="A closer look at the experience"
-          subtitle="Real screens from Snap Collectibles — multi-item scan, value, organize, wishlist, sell, and manage everything in one place. Switch platforms to preview iOS or Android."
+          subtitle="Real screens from Snap Collectibles — portfolio dashboard, AI scan, market values, wishlist, selling tools, and full collection control. Switch platforms to preview iOS or Android."
         />
 
         <div className="mt-8 flex justify-center">
@@ -68,7 +68,7 @@ export default function Gallery() {
         </AnimatePresence>
 
         <p className="mt-8 text-center text-xs text-text-dim">
-          Showing {platformLabel} screens · Multi-item scanning on both platforms
+          Showing {platformLabel} screens · Full feature set on iOS &amp; Android
         </p>
       </div>
     </section>

@@ -9,7 +9,7 @@ import { getHeroScreenshot } from "@/lib/screenshots";
 import { TESTING_EMAIL } from "@/lib/testing";
 
 /**
- * Hero section — multi-item scanning headline, platform switcher,
+ * Hero section — portfolio-first headline, platform switcher,
  * request-access CTA, and platform-specific screenshot.
  */
 export default function Hero() {
@@ -65,9 +65,8 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
             className="text-4xl font-bold tracking-tight text-text sm:text-5xl lg:text-[3.5rem] lg:leading-[1.1]"
           >
-            Scan{" "}
-            <span className="text-gradient">multiple items</span> in a single
-            photo
+            Know what your collection is{" "}
+            <span className="text-gradient">really worth</span>
           </motion.h1>
 
           <motion.p
@@ -76,7 +75,7 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
             className="mx-auto mt-5 max-w-lg text-base leading-relaxed text-text-muted sm:text-lg lg:mx-0"
           >
-            Multi-item scanning is the core of Snap Collectibles on{" "}
+            Snap Collectibles is the portfolio app for serious collectors on{" "}
             <AnimatePresence mode="wait">
               <motion.span
                 key={platform}
@@ -89,10 +88,9 @@ export default function Hero() {
                 {platformLabel}
               </motion.span>
             </AnimatePresence>
-            . Snap one photo of a shelf or stack — we detect and process
-            multiple items at once so you catalog faster, skip one-by-one
-            scanning, and know what everything is worth with real-time eBay sold
-            comps. Built for all size collections.
+            . AI camera scanning, multi-marketplace price intelligence, and a
+            smart dashboard with market value, cost basis, and unrealized
+            profit — so you catalog faster and sell smarter.
           </motion.p>
 
           {/* Testing callout */}
@@ -137,8 +135,8 @@ export default function Hero() {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="mt-5 text-xs text-text-dim"
           >
-            Free beta invite · Multi-item scanning · Built for all size
-            collections
+            Free beta invite · iOS &amp; Android · Portfolio value, scan &amp;
+            sell tools
           </motion.p>
         </div>
 

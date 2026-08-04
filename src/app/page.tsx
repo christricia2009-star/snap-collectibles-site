@@ -2,6 +2,7 @@ import {
   Header,
   Hero,
   Features,
+  WhyUs,
   Gallery,
   HowItWorks,
   Stats,
@@ -16,14 +17,15 @@ import { PlatformProvider } from "@/lib/platform";
  *
  * Section order:
  * 1. Sticky header (platform switcher + request access)
- * 2. Hero (platform switcher, multi-item scanning, request access)
+ * 2. Hero (portfolio-first headline, platform switcher, request access)
  * 3. Features grid
- * 4. Screenshot gallery (platform-aware)
- * 5. How it works
- * 6. Stats / social proof
- * 7. FAQ accordion
- * 8. Final CTA
- * 9. Footer
+ * 4. Why Snap Collectibles (comparison)
+ * 5. Screenshot gallery (platform-aware)
+ * 6. How it works
+ * 7. Stats / social proof
+ * 8. FAQ accordion
+ * 9. Final CTA
+ * 10. Footer
  */
 export default function HomePage() {
   return (
@@ -32,6 +34,7 @@ export default function HomePage() {
       <main>
         <Hero />
         <Features />
+        <WhyUs />
         <Gallery />
         <HowItWorks />
         <Stats />

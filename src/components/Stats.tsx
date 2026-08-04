@@ -19,10 +19,10 @@ type Stat = {
 };
 
 const stats: Stat[] = [
-  { value: 50, suffix: "K+", label: "Items cataloged*" },
+  { value: 5, suffix: "+", label: "Marketplaces priced" },
   { value: 100, suffix: "+", label: "Beta testers welcome" },
-  { value: 99, suffix: "%", label: "Scan accuracy*" },
-  { value: 6, suffix: "", label: "Core screens ready" },
+  { value: 5, suffix: "", label: "Listing draft platforms" },
+  { value: 2, suffix: "", label: "Platforms: iOS & Android" },
 ];
 
 function AnimatedNumber({
@@ -100,8 +100,8 @@ export default function Stats() {
         </motion.div>
 
         <p className="mt-8 text-center text-[11px] text-text-dim">
-          * Early / illustrative metrics while we&apos;re in private beta on iOS
-          &amp; Android — real stats coming at public launch.
+          Private beta on iOS &amp; Android — the same portfolio, scan, and sell
+          tools on both platforms.
         </p>
       </div>
     </section>

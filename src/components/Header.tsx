@@ -64,8 +64,14 @@ export default function Header() {
             Features
           </a>
           <a
-            href="#gallery"
+            href="#why-us"
             className="hidden text-sm font-medium text-text-muted transition-colors hover:text-text lg:inline"
+          >
+            Why us
+          </a>
+          <a
+            href="#gallery"
+            className="hidden text-sm font-medium text-text-muted transition-colors hover:text-text xl:inline"
           >
             Screens
           </a>

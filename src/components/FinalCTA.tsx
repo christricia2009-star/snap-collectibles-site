@@ -35,13 +35,13 @@ export default function FinalCTA() {
             Join the beta
           </p>
           <h2 className="text-3xl font-bold tracking-tight text-text sm:text-4xl md:text-5xl">
-            Help us build the best app for{" "}
-            <span className="text-gradient">collectors</span>
+            Own the smartest view of your{" "}
+            <span className="text-gradient">collection</span>
           </h2>
           <p className="mx-auto mt-4 max-w-lg text-base text-text-muted sm:text-lg">
-            Multi-item scanning, real market values, and organization built for
-            all size collections — private beta on iOS and Android. Request free
-            access to test.
+            Portfolio value, multi-marketplace pricing, AI scanning, and sell
+            drafts — private beta on iOS and Android. Request free access to
+            test.
           </p>
 
           <div className="mt-6 flex justify-center">

@@ -11,25 +11,25 @@ import SectionHeading from "./SectionHeading";
 const steps = [
   {
     step: "01",
-    title: "Scan multiple items at once",
+    title: "Scan with AI vision",
     description:
-      "Snap one photo of a shelf or stack. We detect and process multiple items in a single shot so you build inventory faster — built for all size collections. Barcode scan and manual add are there when you want full control.",
+      "Point the camera at Funko Pops or other collectibles. Identify pieces fast, add them to your collection, and skip the endless manual entry.",
     color: "text-purple-bright",
     ring: "ring-purple/30",
   },
   {
     step: "02",
-    title: "Get real market value",
+    title: "See real market value",
     description:
-      "We pull recent eBay sold comps so you see what similar items actually sold for — not inflated asking prices.",
+      "Multi-marketplace intelligence prioritizes eBay sold comps, then Amazon, StockX, TCGPlayer, and 130 Point. Track cost basis and unrealized P/L on your dashboard.",
     color: "text-pink-hot",
     ring: "ring-pink/30",
   },
   {
     step: "03",
-    title: "Organize & track",
+    title: "Organize, export, sell",
     description:
-      "Tag, search, wishlist, and export. Watch your portfolio grow as you build and refine your collection.",
+      "Bulk move to Selling or Wishlist. Search and filter at speed. Export CSV or JSON. Draft listings for eBay, Mercari, Whatnot, Depop, and Amazon in one tap.",
     color: "text-gold",
     ring: "ring-gold/30",
   },
@@ -41,8 +41,8 @@ export default function HowItWorks() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           eyebrow="How it works"
-          title="Three steps to a smarter collection"
-          subtitle="No spreadsheets. No one-by-one drudgery. Multi-item scan, real values, and stay organized."
+          title="From shelf to portfolio in three steps"
+          subtitle="Scan smarter. Value with real comps. Organize and list without the spreadsheet grind — on iOS and Android."
         />
 
         <div className="relative mt-16 grid gap-8 md:grid-cols-3 md:gap-6">

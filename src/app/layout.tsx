@@ -9,16 +9,18 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Snap Collectibles — Multi-Item Scan for iOS & Android",
+  title: "Snap Collectibles — Portfolio Value & AI Scan for iOS & Android",
   description:
-    "Scan multiple items in a single photo on iOS and Android. Catalog faster with multi-item detection, real-time eBay sold comps, and tools built for all size collections. Request free beta access at Testing@snapcollectibles.com.",
+    "The collectibles portfolio app for iOS and Android. Smart dashboard with market value, cost basis, and P/L. Multi-marketplace pricing, AI camera scanning, listing drafts, and full CSV/JSON import-export. Request free beta access.",
   keywords: [
     "collectibles",
     "collection app",
-    "multi-item scanning",
-    "barcode scanner",
+    "portfolio tracker",
+    "Funko Pop scanner",
+    "AI vision scan",
     "eBay comps",
     "market value",
+    "cost basis",
     "wishlist",
     "iOS",
     "Android",
@@ -26,18 +28,18 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Snap Collectibles", url: "https://snapcollectibles.com" }],
   openGraph: {
-    title: "Snap Collectibles — Multi-Item Scanning for iOS & Android",
+    title: "Snap Collectibles — Know What Your Collection Is Worth",
     description:
-      "Scan multiple items in one photo on iOS and Android. Catalog faster and know what your collection is worth. Request free beta access.",
+      "Portfolio dashboard, multi-marketplace price intelligence, and AI scanning on iOS and Android. Request free beta access.",
     url: "https://snapcollectibles.com",
     siteName: "Snap Collectibles",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Snap Collectibles — Multi-Item Scanning for iOS & Android",
+    title: "Snap Collectibles — Know What Your Collection Is Worth",
     description:
-      "Scan multiple items in one photo on iOS and Android. Catalog faster and know what your collection is worth. Request free beta access.",
+      "Portfolio dashboard, multi-marketplace price intelligence, and AI scanning on iOS and Android. Request free beta access.",
   },
   metadataBase: new URL("https://snapcollectibles.com"),
   icons: {

@@ -21,34 +21,39 @@ const faqs: FAQItem[] = [
       "Not yet — both the iOS and Android apps are currently in private testing. Email Testing@snapcollectibles.com with your name, email, platform (iOS or Android), and a short note about what you collect. We’ll send a free invite when spots are available.",
   },
   {
-    question: "Can it scan multiple items in one photo?",
+    question: "Does it work the same on iOS and Android?",
     answer:
-      "Yes — multi-item scanning is a core feature on both platforms. Snap one photo of a shelf, stack, or display and Snap Collectibles detects and processes multiple items at once, so you catalog faster instead of scanning one piece at a time.",
+      "Yes. Snap Collectibles is built for both platforms with the same core experience: portfolio dashboard, multi-marketplace pricing, AI scanning, bulk tools, import/export, and listing drafts. Use the platform switcher on this page to preview screens for each.",
   },
   {
-    question: "Which platforms are supported?",
+    question: "How does the portfolio dashboard work?",
     answer:
-      "Snap Collectibles is available for testing on iOS (iPhone) and Android. Use the platform switcher on this page to preview screens for each, and tell us which platform you want when you request access.",
+      "Your dashboard shows estimated market value, cost basis, and unrealized profit/loss across your collection. It’s designed so you always know where you stand — not just how many items you own.",
   },
   {
-    question: "What kinds of collectibles does Snap Collectibles support?",
+    question: "Where do market valuations come from?",
     answer:
-      "Snap Collectibles is built for a wide range of physical collectibles — trading cards, figures, sneakers, comics, memorabilia, and more. If it has a barcode or a clear photo, you can add it. Support expands as we grow the catalog.",
+      "We use multi-marketplace price intelligence. eBay sold comps are prioritized first, then Amazon, StockX, TCGPlayer, and 130 Point — so values track what buyers actually pay, not inflated asking prices.",
   },
   {
-    question: "How do market valuations work?",
+    question: "Can I scan collectibles with the camera?",
     answer:
-      "We analyze recent eBay sold listings (comps) for similar items so you see what the market is actually paying — not just asking prices. Values update as new sales data comes in, helping you stay current.",
+      "Yes. Snap Collectibles uses powerful camera + AI vision scanning for Funko Pops and other collectibles. Identify pieces faster and build your catalog with less manual typing.",
   },
   {
-    question: "Is it built for all size collections?",
+    question: "Can I list items to marketplaces from the app?",
     answer:
-      "Yes. Whether you’re starting with a small shelf or managing thousands of items, multi-item scanning, search, tags, and filters stay fast so you can catalog and find anything without spreadsheet chaos.",
+      "You can create one-tap listing drafts for eBay, Mercari, Whatnot, Depop, and Amazon — so moving from inventory to “ready to sell” takes far less busywork.",
+  },
+  {
+    question: "Can I import or export my collection?",
+    answer:
+      "Yes. Full CSV and JSON import/export is supported, with automatic duplicate detection on import. Your data stays portable for backup, insurance, or spreadsheets.",
   },
   {
     question: "Is my collection data private?",
     answer:
-      "Your collection is yours. We take privacy seriously and only use data to provide the product experience (identification, valuation, sync). See our Privacy Policy for full details.",
+      "Your collection is yours. Photos store locally on your device, with automatic stock image enrichment when helpful. We take privacy seriously and only use data to provide the product experience. See our Privacy Policy for full details.",
   },
   {
     question: "Is the beta free?",
