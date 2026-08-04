@@ -1,10 +1,8 @@
 package com.snapcollectibles.app.ui.screens
 
 import android.Manifest
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import android.util.Base64
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -35,7 +33,6 @@ import com.snapcollectibles.app.viewmodel.CollectibleViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.util.concurrent.Executors
 
@@ -63,16 +60,20 @@ fun AddEditScreen(
     var barcode by remember { mutableStateOf("") }
     var notes by remember { mutableStateOf("") }
     var photoUri by remember { mutableStateOf("") }
+    var photoUri2 by remember { mutableStateOf("") }
+    var photoUri3 by remember { mutableStateOf("") }
     var location by remember { mutableStateOf("") }
     var quantity by remember { mutableStateOf("1") }
     var variant by remember { mutableStateOf("") }
     var seriesTarget by remember { mutableStateOf("") }
-    var photoUri2 by remember { mutableStateOf("") }
-    var photoUri3 by remember { mutableStateOf("") }
+
+    // Preserve valuation fields on edit
+    var existing by remember { mutableStateOf<Collectible?>(null) }
 
     var showCamera by remember { mutableStateOf(false) }
     var isBarcodeMode by remember { mutableStateOf(false) }
     var isIdentifying by remember { mutableStateOf(false) }
+    var photoSlot by remember { mutableStateOf(1) }
 
     val categories = listOf(
         "Funko", "Sports Cards", "Trading Cards", "Comics", "Coins",
@@ -82,10 +83,10 @@ fun AddEditScreen(
     val conditions = listOf("Mint", "Near Mint", "Excellent", "Good", "Fair", "Poor")
     val statuses = listOf("Owned", "Selling", "Wishlist")
 
-    // Load existing item
     LaunchedEffect(collectibleId) {
         if (collectibleId != null) {
             viewModel.getById(collectibleId)?.let { c ->
+                existing = c
                 name = c.name
                 category = c.category
                 brand = c.brand
@@ -98,17 +99,16 @@ fun AddEditScreen(
                 barcode = c.barcode
                 notes = c.notes
                 photoUri = c.photoUri
-                location = c.location
-                quantity = c.quantity.toString()
-                variant = c.variant
-                seriesTarget = if (c.seriesTarget > 0) c.seriesTarget.toString() else ""
                 photoUri2 = c.photoUri2
                 photoUri3 = c.photoUri3
+                location = c.location
+                quantity = c.quantity.coerceAtLeast(1).toString()
+                variant = c.variant
+                seriesTarget = if (c.seriesTarget > 0) c.seriesTarget.toString() else ""
             }
         }
     }
 
-    // Photo capture setup
     val photoFile = remember {
         File(context.cacheDir, "snap_${System.currentTimeMillis()}.jpg")
     }
@@ -123,7 +123,12 @@ fun AddEditScreen(
         ActivityResultContracts.TakePicture()
     ) { success ->
         if (success) {
-            photoUri = photoUriForCamera.toString()
+            val uri = photoUriForCamera.toString()
+            when (photoSlot) {
+                2 -> photoUri2 = uri
+                3 -> photoUri3 = uri
+                else -> photoUri = uri
+            }
             Toast.makeText(context, "Photo saved", Toast.LENGTH_SHORT).show()
         }
     }
@@ -142,22 +147,50 @@ fun AddEditScreen(
         }
     }
 
-    // Helper: convert photo URI to base64
     suspend fun uriToBase64(uriString: String): String? = withContext(Dispatchers.IO) {
         try {
             val uri = Uri.parse(uriString)
             val inputStream = context.contentResolver.openInputStream(uri) ?: return@withContext null
             val bitmap = BitmapFactory.decodeStream(inputStream)
             inputStream.close()
-
-            val outputStream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 70, outputStream)
-            val bytes = outputStream.toByteArray()
-            Base64.encodeToString(bytes, Base64.NO_WRAP)
+            valuationService.encodeBitmapForAi(bitmap)
         } catch (e: Exception) {
             e.printStackTrace()
             null
         }
+    }
+
+    fun buildItem(): Collectible {
+        val base = existing
+        return Collectible(
+            id = collectibleId ?: 0,
+            name = name.trim(),
+            category = category,
+            brand = brand.trim(),
+            series = series.trim(),
+            year = year.toIntOrNull(),
+            condition = condition,
+            status = status,
+            estimatedValue = estimatedValue.toDoubleOrNull() ?: 0.0,
+            purchasePrice = purchasePrice.toDoubleOrNull() ?: 0.0,
+            barcode = barcode.trim(),
+            photoUri = photoUri,
+            photoUri2 = photoUri2,
+            photoUri3 = photoUri3,
+            notes = notes.trim(),
+            location = location.trim(),
+            quantity = quantity.toIntOrNull()?.coerceAtLeast(1) ?: 1,
+            variant = variant.trim(),
+            seriesTarget = seriesTarget.toIntOrNull() ?: 0,
+            amazonPrice = base?.amazonPrice ?: 0.0,
+            ebayAvgSold = base?.ebayAvgSold ?: 0.0,
+            ebayLow = base?.ebayLow ?: 0.0,
+            ebayHigh = base?.ebayHigh ?: 0.0,
+            ebaySampleCount = base?.ebaySampleCount ?: 0,
+            lastValuedAt = base?.lastValuedAt ?: 0L,
+            dateAdded = base?.dateAdded ?: System.currentTimeMillis(),
+            priceHistoryJson = base?.priceHistoryJson ?: "[]"
+        )
     }
 
     Scaffold(
@@ -173,27 +206,10 @@ fun AddEditScreen(
                             Toast.makeText(context, "Name is required", Toast.LENGTH_SHORT).show()
                             return@TextButton
                         }
-                        val item = Collectible(
-                            id = collectibleId ?: 0,
-                            name = name.trim(),
-                            category = category,
-                            brand = brand.trim(),
-                            series = series.trim(),
-                            year = year.toIntOrNull(),
-                            condition = condition,
-                            status = status,
-                            estimatedValue = estimatedValue.toDoubleOrNull() ?: 0.0,
-                            purchasePrice = purchasePrice.toDoubleOrNull() ?: 0.0,
-                            barcode = barcode.trim(),
-                            photoUri = photoUri,
-                            notes = notes.trim(),
-                            location = location.trim(),
-                            quantity = quantity.toIntOrNull()?.coerceAtLeast(1) ?: 1,
-                            variant = variant.trim(),
-                            seriesTarget = seriesTarget.toIntOrNull() ?: 0,
-                            photoUri2 = photoUri2,
-                            photoUri3 = photoUri3
-                        )
+                        if (collectibleId == null && viewModel.isDuplicate(name.trim(), barcode.trim())) {
+                            Toast.makeText(context, "Possible duplicate (same name or barcode)", Toast.LENGTH_LONG).show()
+                        }
+                        val item = buildItem()
                         if (collectibleId == null) viewModel.insert(item)
                         else viewModel.update(item)
                         onSaved()
@@ -230,7 +246,6 @@ fun AddEditScreen(
                     modifier = Modifier.fillMaxWidth()
                 )
 
-                // Category
                 var catExpanded by remember { mutableStateOf(false) }
                 ExposedDropdownMenuBox(
                     expanded = catExpanded,
@@ -262,9 +277,10 @@ fun AddEditScreen(
 
                 OutlinedTextField(value = brand, onValueChange = { brand = it }, label = { Text("Brand") }, modifier = Modifier.fillMaxWidth())
                 OutlinedTextField(value = series, onValueChange = { series = it }, label = { Text("Series / Line") }, modifier = Modifier.fillMaxWidth())
+                OutlinedTextField(value = variant, onValueChange = { variant = it }, label = { Text("Variant (chase, exclusive…)") }, modifier = Modifier.fillMaxWidth())
                 OutlinedTextField(value = year, onValueChange = { year = it }, label = { Text("Year") }, modifier = Modifier.fillMaxWidth())
+                OutlinedTextField(value = seriesTarget, onValueChange = { seriesTarget = it }, label = { Text("Series target (set size)") }, modifier = Modifier.fillMaxWidth())
 
-                // Condition
                 var condExpanded by remember { mutableStateOf(false) }
                 ExposedDropdownMenuBox(
                     expanded = condExpanded,
@@ -294,7 +310,6 @@ fun AddEditScreen(
                     }
                 }
 
-                // Status / List
                 var statusExpanded by remember { mutableStateOf(false) }
                 ExposedDropdownMenuBox(
                     expanded = statusExpanded,
@@ -324,39 +339,60 @@ fun AddEditScreen(
                     }
                 }
 
+                OutlinedTextField(value = quantity, onValueChange = { quantity = it }, label = { Text("Quantity") }, modifier = Modifier.fillMaxWidth())
+                OutlinedTextField(value = location, onValueChange = { location = it }, label = { Text("Location (shelf, bin…)") }, modifier = Modifier.fillMaxWidth())
                 OutlinedTextField(value = estimatedValue, onValueChange = { estimatedValue = it }, label = { Text("Estimated Value ($)") }, modifier = Modifier.fillMaxWidth())
                 OutlinedTextField(value = purchasePrice, onValueChange = { purchasePrice = it }, label = { Text("Purchase Price ($)") }, modifier = Modifier.fillMaxWidth())
                 OutlinedTextField(value = barcode, onValueChange = { barcode = it }, label = { Text("Barcode / UPC / ASIN") }, modifier = Modifier.fillMaxWidth())
                 OutlinedTextField(value = notes, onValueChange = { notes = it }, label = { Text("Notes") }, modifier = Modifier.fillMaxWidth(), minLines = 3)
-                OutlinedTextField(value = location, onValueChange = { location = it }, label = { Text("Location (shelf / bin / room)") }, modifier = Modifier.fillMaxWidth())
-                OutlinedTextField(value = quantity, onValueChange = { quantity = it }, label = { Text("Quantity") }, modifier = Modifier.fillMaxWidth())
-                OutlinedTextField(value = variant, onValueChange = { variant = it }, label = { Text("Variant / Exclusive / Chase") }, modifier = Modifier.fillMaxWidth())
-                OutlinedTextField(value = seriesTarget, onValueChange = { seriesTarget = it }, label = { Text("Series Target (total in set)") }, modifier = Modifier.fillMaxWidth())
 
-                // Camera buttons
+                Text("Photos", style = MaterialTheme.typography.titleSmall)
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     Button(onClick = {
+                        photoSlot = 1
                         isBarcodeMode = false
                         permissionLauncher.launch(Manifest.permission.CAMERA)
                     }) {
                         Icon(Icons.Default.CameraAlt, contentDescription = null)
                         Spacer(Modifier.width(8.dp))
-                        Text("Take Photo")
+                        Text(if (photoUri.isBlank()) "Photo 1" else "Retake 1")
                     }
                     OutlinedButton(onClick = {
-                        isBarcodeMode = true
+                        photoSlot = 2
+                        isBarcodeMode = false
                         permissionLauncher.launch(Manifest.permission.CAMERA)
                     }) {
-                        Icon(Icons.Default.QrCode, contentDescription = null)
-                        Spacer(Modifier.width(8.dp))
-                        Text("Scan Barcode")
+                        Text(if (photoUri2.isBlank()) "Photo 2" else "Retake 2")
                     }
+                    OutlinedButton(onClick = {
+                        photoSlot = 3
+                        isBarcodeMode = false
+                        permissionLauncher.launch(Manifest.permission.CAMERA)
+                    }) {
+                        Text(if (photoUri3.isBlank()) "Photo 3" else "Retake 3")
+                    }
+                }
+                if (photoUri.isNotBlank() || photoUri2.isNotBlank() || photoUri3.isNotBlank()) {
+                    Text(
+                        listOfNotNull(
+                            photoUri.takeIf { it.isNotBlank() }?.let { "1" },
+                            photoUri2.takeIf { it.isNotBlank() }?.let { "2" },
+                            photoUri3.takeIf { it.isNotBlank() }?.let { "3" }
+                        ).joinToString(", ", prefix = "Attached: photo "),
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
+
+                OutlinedButton(onClick = {
+                    isBarcodeMode = true
+                    permissionLauncher.launch(Manifest.permission.CAMERA)
+                }) {
+                    Icon(Icons.Default.QrCode, contentDescription = null)
+                    Spacer(Modifier.width(8.dp))
+                    Text("Scan Barcode")
                 }
 
                 if (photoUri.isNotBlank()) {
-                    Text("Photo attached", style = MaterialTheme.typography.bodySmall)
-
-                    // AI Identify button
                     Button(
                         onClick = {
                             val prefs = PreferencesManager(context)
@@ -373,7 +409,7 @@ fun AddEditScreen(
                                     Toast.makeText(context, "Could not read photo", Toast.LENGTH_SHORT).show()
                                     return@launch
                                 }
-                                val result = valuationService.identifyFromPhoto(key, base64)
+                                val result = valuationService.identifyFromPhoto(key, base64, category)
                                 isIdentifying = false
                                 if (result != null) {
                                     name = result.name

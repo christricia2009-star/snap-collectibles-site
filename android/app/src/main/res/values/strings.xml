@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Snap Collectibles</string>
+    <string name="widget_description">Shows your collection market value and piece count.</string>
 </resources>

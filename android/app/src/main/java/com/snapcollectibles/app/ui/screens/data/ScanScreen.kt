@@ -1,10 +1,8 @@
 package com.snapcollectibles.app.ui.screens
 
 import android.Manifest
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import android.util.Base64
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -39,7 +37,6 @@ import com.snapcollectibles.app.viewmodel.CollectibleViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.util.concurrent.Executors
 
@@ -109,16 +106,14 @@ fun ScanScreen(
         }
     }
 
-    // URI → Base64
+    // URI → downscaled Base64 (keeps OpenRouter payloads reasonable)
     suspend fun uriToBase64(uriString: String): String? = withContext(Dispatchers.IO) {
         try {
             val uri = Uri.parse(uriString)
             val inputStream = context.contentResolver.openInputStream(uri) ?: return@withContext null
             val bitmap = BitmapFactory.decodeStream(inputStream)
             inputStream.close()
-            val outputStream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 70, outputStream)
-            Base64.encodeToString(outputStream.toByteArray(), Base64.NO_WRAP)
+            valuationService.encodeBitmapForAi(bitmap)
         } catch (e: Exception) {
             e.printStackTrace()
             null
@@ -268,7 +263,7 @@ fun ScanScreen(
                                     Toast.makeText(context, "Could not read photo", Toast.LENGTH_SHORT).show()
                                     return@launch
                                 }
-                                val result = valuationService.identifyFromPhoto(key, base64)
+                                val result = valuationService.identifyFromPhoto(key, base64, selectedCategory)
                                 isIdentifying = false
                                 if (result != null) {
                                     identifiedName = result.name
@@ -356,6 +351,13 @@ fun ScanScreen(
                             if (identifiedName.trim().isBlank()) {
                                 Toast.makeText(context, "Name is required", Toast.LENGTH_SHORT).show()
                                 return@Button
+                            }
+                            if (viewModel.isDuplicate(identifiedName.trim(), barcode.trim())) {
+                                Toast.makeText(
+                                    context,
+                                    "Possible duplicate (same name or barcode) — still saving",
+                                    Toast.LENGTH_LONG
+                                ).show()
                             }
                             val item = Collectible(
                                 name = identifiedName.trim(),

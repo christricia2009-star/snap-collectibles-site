@@ -1,11 +1,19 @@
 package com.snapcollectibles.app.viewmodel
 
 import android.app.Application
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
+import android.content.Intent
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.snapcollectibles.app.data.AppDatabase
 import com.snapcollectibles.app.data.Collectible
 import com.snapcollectibles.app.data.CollectibleRepository
+import com.snapcollectibles.app.data.PreferencesManager
+import com.snapcollectibles.app.data.ValuationService
+import com.snapcollectibles.app.data.portfolioValue
+import com.snapcollectibles.app.data.preferredValue
+import com.snapcollectibles.app.widget.PortfolioWidgetProvider
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -23,6 +31,8 @@ class CollectibleViewModel(application: Application) : AndroidViewModel(applicat
     private val repository = CollectibleRepository(
         AppDatabase.getInstance(application).collectibleDao()
     )
+    private val prefs = PreferencesManager(application)
+    private val valuationService = ValuationService()
 
     private val _searchQuery = MutableStateFlow("")
     val searchQuery = _searchQuery.asStateFlow()
@@ -41,6 +51,10 @@ class CollectibleViewModel(application: Application) : AndroidViewModel(applicat
 
     private val _selectedIds = MutableStateFlow<Set<Long>>(emptySet())
     val selectedIds = _selectedIds.asStateFlow()
+
+    private val _batchRevalueProgress = MutableStateFlow<Pair<Int, Int>?>(null)
+    /** null when idle; (done, total) while batch re-valuing. */
+    val batchRevalueProgress = _batchRevalueProgress.asStateFlow()
 
     val isSelectionMode = _selectedIds
         .map { it.isNotEmpty() }
@@ -77,14 +91,27 @@ class CollectibleViewModel(application: Application) : AndroidViewModel(applicat
                 SortOption.DATE_OLDEST -> filtered.sortedBy { it.dateAdded }
                 SortOption.NAME_AZ -> filtered.sortedBy { it.name.lowercase() }
                 SortOption.NAME_ZA -> filtered.sortedByDescending { it.name.lowercase() }
-                SortOption.VALUE_HIGH -> filtered.sortedByDescending { it.estimatedValue }
-                SortOption.VALUE_LOW -> filtered.sortedBy { it.estimatedValue }
+                SortOption.VALUE_HIGH -> filtered.sortedByDescending { it.preferredValue }
+                SortOption.VALUE_LOW -> filtered.sortedBy { it.preferredValue }
             }
         }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     val allCollectibles: StateFlow<List<Collectible>> = repository.getAll()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    init {
+        // Keep widget snapshot in sync with owned + selling market value.
+        viewModelScope.launch {
+            allCollectibles.collect { list ->
+                val portfolio = list.filter { it.status == "Owned" || it.status == "Selling" }
+                val value = portfolio.sumOf { it.portfolioValue }
+                val count = portfolio.sumOf { it.quantity.coerceAtLeast(1) }
+                prefs.updatePortfolioSnapshot(value, count)
+                refreshWidget()
+            }
+        }
+    }
 
     fun setSearchQuery(query: String) {
         _searchQuery.value = query
@@ -163,95 +190,86 @@ class CollectibleViewModel(application: Application) : AndroidViewModel(applicat
         items.forEach { repository.insert(it) }
     }
 
-    fun isDuplicate(name: String, barcode: String): Boolean {
+    fun isDuplicate(name: String, barcode: String = ""): Boolean {
         val list = allCollectibles.value
         return list.any {
-            (barcode.isNotBlank() && it.barcode.isNotBlank() && it.barcode.equals(barcode, ignoreCase = true)) ||
-                    (name.isNotBlank() && it.name.equals(name.trim(), ignoreCase = true))
+            (barcode.isNotBlank() && it.barcode.equals(barcode, ignoreCase = true)) ||
+                (name.isNotBlank() && it.name.equals(name.trim(), ignoreCase = true))
         }
-    }
-
-    /** Quick portfolio totals for dashboards */
-    fun portfolioSummary(): Map<String, Double> {
-        val items = allCollectibles.value
-        val market = items.sumOf { it.preferredValue * it.quantity.coerceAtLeast(1) }
-        val cost = items.filter { it.purchasePrice > 0 }
-            .sumOf { it.purchasePrice * it.quantity.coerceAtLeast(1) }
-        val gain = items.filter { it.hasRoiData }
-            .sumOf { it.unrealizedGain * it.quantity.coerceAtLeast(1) }
-        return mapOf(
-            "market" to market,
-            "cost" to cost,
-            "gain" to gain
-        )
     }
 
     /**
-     * Batch re-value items. Skips items valued within [cacheHours] unless [force] is true.
-     * Returns count of successfully updated items.
+     * Batch re-value selected items (or entire collection if [ids] is null/empty with [all] true).
+     * Requires API keys in SharedPreferences. Skips items valued within 24h unless [force].
      */
-    suspend fun batchRevalue(
-        ids: Set<Long>,
-        soldCompsKey: String,
-        rainforestKey: String,
+    fun batchRevalue(
+        ids: Set<Long>? = null,
+        all: Boolean = false,
         force: Boolean = false,
-        cacheHours: Int = 24,
-        onProgress: (done: Int, total: Int, name: String) -> Unit = { _, _, _ -> }
-    ): Int {
-        val valuationService = com.snapcollectibles.app.data.ValuationService()
-        val cacheMs = cacheHours * 60L * 60 * 1000
-        val targets = allCollectibles.value.filter { it.id in ids }
-        var updated = 0
-        targets.forEachIndexed { index, item ->
-            onProgress(index, targets.size, item.name)
-            if (!force && item.isFreshlyValued(cacheMs)) {
-                return@forEachIndexed
+        onFinished: (successCount: Int, total: Int) -> Unit = { _, _ -> }
+    ) {
+        viewModelScope.launch {
+            val rainforest = prefs.rainforestApiKey
+            val soldComps = prefs.soldCompsApiKey
+            if (rainforest.isBlank() && soldComps.isBlank()) {
+                onFinished(0, 0)
+                return@launch
             }
-            try {
-                // Prefer eBay sold comps by name
-                var ebayAvg = item.ebayAvgSold
-                var ebayLow = item.ebayLow
-                var ebayHigh = item.ebayHigh
-                var ebayCount = item.ebaySampleCount
-                if (soldCompsKey.isNotBlank() && item.name.isNotBlank()) {
-                    val result = valuationService.getEbaySoldComps(soldCompsKey, item.name)
-                    if (result != null) {
-                        ebayAvg = result.avgPrice
-                        ebayLow = result.minPrice
-                        ebayHigh = result.maxPrice
-                        ebayCount = result.count
-                    }
-                }
-                var amazon = item.amazonPrice
-                if (rainforestKey.isNotBlank() && item.barcode.isNotBlank()) {
-                    val price = valuationService.getAmazonPrice(rainforestKey, item.barcode, isUpc = true)
-                    if (price != null) amazon = price
-                }
-                val newEstimate = when {
-                    ebayAvg > 0 -> ebayAvg
-                    amazon > 0 -> amazon
-                    else -> item.estimatedValue
-                }
-                repository.update(
-                    item.copy(
-                        ebayAvgSold = ebayAvg,
-                        ebayLow = ebayLow,
-                        ebayHigh = ebayHigh,
-                        ebaySampleCount = ebayCount,
-                        amazonPrice = amazon,
-                        estimatedValue = if (item.estimatedValue == 0.0) newEstimate else item.estimatedValue,
-                        lastValuedAt = System.currentTimeMillis()
-                    )
-                )
-                updated++
-                // Gentle rate limit
-                kotlinx.coroutines.delay(400)
-            } catch (_: Exception) {
-                // continue
+
+            val source = when {
+                all -> allCollectibles.value
+                ids != null && ids.isNotEmpty() -> allCollectibles.value.filter { it.id in ids }
+                else -> allCollectibles.value.filter { it.id in _selectedIds.value }
             }
+            if (source.isEmpty()) {
+                onFinished(0, 0)
+                return@launch
+            }
+
+            _batchRevalueProgress.value = 0 to source.size
+            val success = valuationService.batchRevalue(
+                items = source,
+                rainforestKey = rainforest,
+                soldCompsKey = soldComps,
+                force = force,
+                onProgress = { done, total, _ ->
+                    _batchRevalueProgress.value = done to total
+                },
+                onItemUpdated = { updated ->
+                    repository.update(updated)
+                }
+            )
+            _batchRevalueProgress.value = null
+            if (!all) clearSelection()
+            onFinished(success, source.size)
         }
-        onProgress(targets.size, targets.size, "Done")
-        return updated
     }
 
+    fun revalueOne(
+        item: Collectible,
+        force: Boolean = true,
+        onDone: (Collectible) -> Unit = {}
+    ) {
+        viewModelScope.launch {
+            val updated = valuationService.revalueItem(
+                item = item,
+                rainforestKey = prefs.rainforestApiKey,
+                soldCompsKey = prefs.soldCompsApiKey,
+                force = force
+            )
+            repository.update(updated)
+            onDone(updated)
+        }
+    }
+
+    private fun refreshWidget() {
+        val app = getApplication<Application>()
+        val intent = Intent(app, PortfolioWidgetProvider::class.java).apply {
+            action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+            val ids = AppWidgetManager.getInstance(app)
+                .getAppWidgetIds(ComponentName(app, PortfolioWidgetProvider::class.java))
+            putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
+        }
+        app.sendBroadcast(intent)
+    }
 }

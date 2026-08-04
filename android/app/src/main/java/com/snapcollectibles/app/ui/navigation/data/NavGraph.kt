@@ -123,7 +123,8 @@ fun NavGraph(
         composable(Screen.BulkScan.route) {
             BulkScanScreen(
                 viewModel = viewModel,
-                onDone = { navController.popBackStack() }
+                onDone = { navController.popBackStack() },
+                onCancel = { navController.popBackStack() }
             )
         }
     }

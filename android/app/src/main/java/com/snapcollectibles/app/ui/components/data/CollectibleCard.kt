@@ -16,6 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.snapcollectibles.app.data.Collectible
+import com.snapcollectibles.app.data.preferredValue
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -25,6 +26,9 @@ fun CollectibleCard(
     onClick: () -> Unit,
     onLongClick: () -> Unit = {}
 ) {
+    val value = collectible.preferredValue
+    val qty = collectible.quantity.coerceAtLeast(1)
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -67,34 +71,53 @@ fun CollectibleCard(
                 Text(
                     text = collectible.name,
                     style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.SemiBold
+                    fontWeight = FontWeight.SemiBold,
+                    maxLines = 2
                 )
+                val subtitle = buildString {
+                    append(collectible.category)
+                    if (collectible.brand.isNotBlank()) append(" • ${collectible.brand}")
+                    if (collectible.variant.isNotBlank()) append(" • ${collectible.variant}")
+                }
                 Text(
-                    text = "${collectible.category} • ${collectible.brand}",
+                    text = subtitle,
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
+                if (collectible.location.isNotBlank()) {
+                    Text(
+                        text = "📍 ${collectible.location}",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
                 Row(
                     modifier = Modifier.padding(top = 4.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     AssistChip(
                         onClick = {},
                         label = { Text(collectible.status) },
                         modifier = Modifier.height(28.dp)
                     )
-                    if (collectible.preferredValue > 0) {
-                        Text(
-                            text = "$${"%.2f".format(collectible.preferredValue)}",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.primary
+                    if (qty > 1) {
+                        AssistChip(
+                            onClick = {},
+                            label = { Text("×$qty") },
+                            modifier = Modifier.height(28.dp)
                         )
                     }
-                    if (collectible.quantity > 1) {
+                    if (value > 0) {
                         Text(
-                            text = "×${collectible.quantity}",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                            text = if (qty > 1) {
+                                "$${"%.2f".format(value)} ($${"%.2f".format(value * qty)})"
+                            } else {
+                                "$${"%.2f".format(value)}"
+                            },
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.primary,
+                            fontWeight = FontWeight.SemiBold
                         )
                     }
                 }

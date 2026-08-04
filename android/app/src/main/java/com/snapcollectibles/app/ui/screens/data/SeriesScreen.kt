@@ -11,18 +11,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.snapcollectibles.app.data.portfolioValue
 import com.snapcollectibles.app.viewmodel.CollectibleViewModel
 
-data class SeriesProgress(
+data class SeriesGroup(
     val series: String,
-    val category: String,
     val ownedCount: Int,
+    val pieceCount: Int,
     val target: Int,
-    val totalValue: Double
+    val seriesValue: Double,
+    val category: String
 ) {
-    val percent: Float
+    val progress: Float
         get() = if (target > 0) (ownedCount.toFloat() / target).coerceIn(0f, 1f) else 0f
-    val hasTarget: Boolean get() = target > 0
+    val percentLabel: String
+        get() = if (target > 0) "${(progress * 100).toInt()}%" else "—"
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -32,27 +35,26 @@ fun SeriesScreen(
     onBack: () -> Unit
 ) {
     val allItems by viewModel.allCollectibles.collectAsState()
-    val owned = allItems.filter { it.status == "Owned" || it.status == "Selling" }
 
-    val seriesList = remember(owned) {
-        owned
+    val groups = remember(allItems) {
+        allItems
+            .filter { it.status == "Owned" || it.status == "Selling" }
             .filter { it.series.isNotBlank() }
-            .groupBy { it.series.trim() to it.category }
-            .map { (key, items) ->
-                val (series, category) = key
-                val target = items.map { it.seriesTarget }.firstOrNull { it > 0 }
-                    ?: items.maxOfOrNull { it.seriesTarget } ?: 0
-                SeriesProgress(
+            .groupBy { it.series.trim() }
+            .map { (series, items) ->
+                val target = items.maxOfOrNull { it.seriesTarget } ?: 0
+                SeriesGroup(
                     series = series,
-                    category = category,
-                    ownedCount = items.sumOf { it.quantity.coerceAtLeast(1) },
+                    ownedCount = items.size,
+                    pieceCount = items.sumOf { it.quantity.coerceAtLeast(1) },
                     target = target,
-                    totalValue = items.sumOf { it.preferredValue * it.quantity.coerceAtLeast(1) }
+                    seriesValue = items.sumOf { it.portfolioValue },
+                    category = items.groupBy { it.category }.maxByOrNull { it.value.size }?.key ?: ""
                 )
             }
             .sortedWith(
-                compareByDescending<SeriesProgress> { it.hasTarget }
-                    .thenByDescending { it.ownedCount }
+                compareByDescending<SeriesGroup> { it.seriesValue }
+                    .thenBy { it.series.lowercase() }
             )
     }
 
@@ -68,16 +70,18 @@ fun SeriesScreen(
             )
         }
     ) { padding ->
-        if (seriesList.isEmpty()) {
+        if (groups.isEmpty()) {
             Box(
-                modifier = Modifier.fillMaxSize().padding(padding),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding),
                 contentAlignment = Alignment.Center
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text("No series data yet", style = MaterialTheme.typography.titleMedium)
+                    Text("No series yet", style = MaterialTheme.typography.titleMedium)
                     Spacer(Modifier.height(8.dp))
                     Text(
-                        "Set the Series field on your items.\nOptionally set Series Target on any item in that series for completion %.",
+                        "Set Series on items (and optional Series Target) to track completion.",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -85,45 +89,64 @@ fun SeriesScreen(
             }
         } else {
             LazyColumn(
-                modifier = Modifier.fillMaxSize().padding(padding),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding),
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 item {
                     Text(
-                        "Completion is based on items you own (and are selling). Set “Series Target” on an item to define how many are in the full set.",
-                        style = MaterialTheme.typography.bodySmall,
+                        "${groups.size} series • Owned + Selling",
+                        style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-                    Spacer(Modifier.height(8.dp))
                 }
-                items(seriesList) { sp ->
-                    Card(modifier = Modifier.fillMaxWidth()) {
-                        Column(modifier = Modifier.padding(16.dp)) {
-                            Text(sp.series, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
-                            Text(sp.category, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                            Spacer(Modifier.height(8.dp))
-                            if (sp.hasTarget) {
-                                LinearProgressIndicator(
-                                    progress = { sp.percent },
-                                    modifier = Modifier.fillMaxWidth().height(8.dp)
-                                )
-                                Spacer(Modifier.height(6.dp))
-                                Text(
-                                    "${sp.ownedCount} / ${sp.target}  (${(sp.percent * 100).toInt()}%)",
-                                    style = MaterialTheme.typography.bodyMedium
-                                )
-                            } else {
-                                Text("${sp.ownedCount} owned  •  target not set", style = MaterialTheme.typography.bodyMedium)
-                            }
-                            Text(
-                                "Value: $${"%.2f".format(sp.totalValue)}",
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.primary
-                            )
-                        }
-                    }
+                items(groups, key = { it.series }) { group ->
+                    SeriesCard(group)
                 }
+            }
+        }
+    }
+}
+
+@Composable
+private fun SeriesCard(group: SeriesGroup) {
+    Card(modifier = Modifier.fillMaxWidth()) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Text(group.series, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+            if (group.category.isNotBlank()) {
+                Text(group.category, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+            Text(
+                "Owned: ${group.ownedCount} entries (${group.pieceCount} pcs)" +
+                    if (group.target > 0) " • Target: ${group.target}" else "",
+                style = MaterialTheme.typography.bodyMedium
+            )
+            Text(
+                "Series value: $${"%.2f".format(group.seriesValue)}",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.primary,
+                fontWeight = FontWeight.SemiBold
+            )
+            if (group.target > 0) {
+                LinearProgressIndicator(
+                    progress = { group.progress },
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Text(
+                    "${group.percentLabel} complete (${group.ownedCount}/${group.target})",
+                    style = MaterialTheme.typography.labelMedium
+                )
+            } else {
+                Text(
+                    "Set Series Target on any item in this series to track % complete",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
             }
         }
     }

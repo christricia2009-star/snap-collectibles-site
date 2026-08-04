@@ -17,6 +17,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.snapcollectibles.app.data.ExportHelper
+import com.snapcollectibles.app.data.PreferencesManager
+import com.snapcollectibles.app.data.portfolioValue
 import com.snapcollectibles.app.ui.components.CollectibleCard
 import com.snapcollectibles.app.viewmodel.CollectibleViewModel
 import com.snapcollectibles.app.viewmodel.SortOption
@@ -44,24 +46,16 @@ fun HomeScreen(
     val isSelectionMode by viewModel.isSelectionMode.collectAsState()
     val filterCategory by viewModel.filterCategory.collectAsState()
     val filterCondition by viewModel.filterCondition.collectAsState()
+    val batchProgress by viewModel.batchRevalueProgress.collectAsState()
 
-    val totalValue = collectibles.sumOf { it.preferredValue * it.quantity.coerceAtLeast(1) }
-
-    // Keep home-screen widget in sync
-    LaunchedEffect(collectibles) {
-        val prefs = com.snapcollectibles.app.data.PreferencesManager(context)
-        prefs.lastPortfolioValue = totalValue.toFloat()
-        prefs.lastPortfolioCount = collectibles.size
-        com.snapcollectibles.app.PortfolioWidgetProvider.refreshAll(context)
-    }
+    val totalValue = collectibles.sumOf { it.portfolioValue }
+    val totalQty = collectibles.sumOf { it.quantity.coerceAtLeast(1) }
 
     var showSortMenu by remember { mutableStateOf(false) }
     var showMoveMenu by remember { mutableStateOf(false) }
     var showFilterSheet by remember { mutableStateOf(false) }
 
     val snackbarHostState = remember { SnackbarHostState() }
-    var isBatchRevaluing by remember { mutableStateOf(false) }
-    var batchProgress by remember { mutableStateOf("") }
 
     val categories = listOf(
         "Funko", "Sports Cards", "Trading Cards", "Comics", "Coins",
@@ -87,39 +81,25 @@ fun HomeScreen(
                         }) {
                             Icon(Icons.Default.SelectAll, contentDescription = "Select All")
                         }
-                        IconButton(
-                            onClick = {
-                                if (isBatchRevaluing) return@IconButton
-                                val prefs = com.snapcollectibles.app.data.PreferencesManager(context)
-                                if (prefs.soldCompsApiKey.isBlank() && prefs.rainforestApiKey.isBlank()) {
-                                    Toast.makeText(context, "Set API keys in Settings first", Toast.LENGTH_LONG).show()
-                                    return@IconButton
-                                }
-                                isBatchRevaluing = true
-                                batchProgress = "Starting…"
-                                scope.launch {
-                                    val count = viewModel.batchRevalue(
-                                        ids = selectedIds,
-                                        soldCompsKey = prefs.soldCompsApiKey,
-                                        rainforestKey = prefs.rainforestApiKey,
-                                        force = false,
-                                        cacheHours = 24
-                                    ) { done, total, name ->
-                                        batchProgress = "$done/$total $name"
-                                    }
-                                    isBatchRevaluing = false
-                                    batchProgress = ""
-                                    viewModel.clearSelection()
-                                    Toast.makeText(context, "Re-valued $count items", Toast.LENGTH_LONG).show()
-                                }
-                            },
-                            enabled = !isBatchRevaluing
-                        ) {
-                            if (isBatchRevaluing) {
-                                CircularProgressIndicator(modifier = Modifier.size(20.dp))
-                            } else {
-                                Icon(Icons.Default.Refresh, contentDescription = "Re-value selected")
+                        IconButton(onClick = {
+                            val prefs = PreferencesManager(context)
+                            if (prefs.rainforestApiKey.isBlank() && prefs.soldCompsApiKey.isBlank()) {
+                                Toast.makeText(
+                                    context,
+                                    "Set Rainforest or SoldComps API key in Settings",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                                return@IconButton
                             }
+                            viewModel.batchRevalue(ids = selectedIds, force = true) { ok, total ->
+                                Toast.makeText(
+                                    context,
+                                    "Re-valued $ok of $total items",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        }) {
+                            Icon(Icons.Default.Refresh, contentDescription = "Batch re-value")
                         }
                         IconButton(onClick = { showMoveMenu = true }) {
                             Icon(Icons.Default.DriveFileMove, contentDescription = "Move")
@@ -240,6 +220,20 @@ fun HomeScreen(
                 .fillMaxSize()
                 .padding(padding)
         ) {
+            batchProgress?.let { (done, total) ->
+                LinearProgressIndicator(
+                    progress = { if (total > 0) done.toFloat() / total else 0f },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 4.dp)
+                )
+                Text(
+                    "Re-valuing $done / $total…",
+                    style = MaterialTheme.typography.labelSmall,
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                )
+            }
+
             if (collectibles.isNotEmpty() && !isSelectionMode) {
                 Card(
                     modifier = Modifier
@@ -263,7 +257,10 @@ fun HomeScreen(
                             style = MaterialTheme.typography.headlineSmall,
                             fontWeight = FontWeight.Bold
                         )
-                        Text("${collectibles.size} items", style = MaterialTheme.typography.bodySmall)
+                        Text(
+                            "$totalQty pieces • ${collectibles.size} entries (preferred market value)",
+                            style = MaterialTheme.typography.bodySmall
+                        )
                     }
                 }
             }
@@ -279,7 +276,6 @@ fun HomeScreen(
                 singleLine = true
             )
 
-            // Filter chip
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -320,7 +316,7 @@ fun HomeScreen(
                             style = MaterialTheme.typography.titleMedium
                         )
                         Spacer(Modifier.height(8.dp))
-                        Text("Tap + or use the Scan tab", style = MaterialTheme.typography.bodyMedium)
+                        Text("Tap + or use Scan / Bulk Scan", style = MaterialTheme.typography.bodyMedium)
                     }
                 }
             } else {
@@ -422,7 +418,6 @@ fun HomeScreen(
         }
     }
 
-    // Filter bottom sheet
     if (showFilterSheet) {
         ModalBottomSheet(onDismissRequest = { showFilterSheet = false }) {
             Column(

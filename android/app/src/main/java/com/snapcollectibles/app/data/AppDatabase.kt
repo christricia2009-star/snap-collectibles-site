@@ -5,9 +5,16 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
+/**
+ * Room DB version 5 adds: location, quantity, variant, photoUri2/3,
+ * ebayLow/High/SampleCount, seriesTarget.
+ *
+ * Uses [fallbackToDestructiveMigration] — export CSV before upgrading
+ * if you need to keep local data across schema changes.
+ */
 @Database(
     entities = [Collectible::class],
-    version = 6,
+    version = 5,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {

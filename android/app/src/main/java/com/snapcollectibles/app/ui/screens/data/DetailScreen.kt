@@ -6,6 +6,8 @@ import android.view.HapticFeedbackConstants
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -28,6 +30,11 @@ import com.snapcollectibles.app.data.Collectible
 import com.snapcollectibles.app.data.PreferencesManager
 import com.snapcollectibles.app.data.SoldCompResult
 import com.snapcollectibles.app.data.ValuationService
+import com.snapcollectibles.app.data.allPhotos
+import com.snapcollectibles.app.data.hasRoiData
+import com.snapcollectibles.app.data.portfolioValue
+import com.snapcollectibles.app.data.preferredValue
+import com.snapcollectibles.app.data.unrealizedGain
 import com.snapcollectibles.app.viewmodel.CollectibleViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -53,6 +60,7 @@ fun DetailScreen(
     var isLoadingAmazon by remember { mutableStateOf(false) }
     var isLoadingEbay by remember { mutableStateOf(false) }
     var showFullPhoto by remember { mutableStateOf(false) }
+    var fullPhotoUri by remember { mutableStateOf("") }
     var showSoldComps by remember { mutableStateOf(false) }
     var lastSoldResult by remember { mutableStateOf<SoldCompResult?>(null) }
 
@@ -78,21 +86,20 @@ fun DetailScreen(
         Toast.makeText(context, "Moved to $newStatus", Toast.LENGTH_SHORT).show()
     }
 
-    fun addPricePoint(price: Double, source: String) {
+    fun addPricePoint(price: Double, source: String, base: Collectible = item): Collectible {
         val type = object : TypeToken<MutableList<PricePoint>>() {}.type
         val history: MutableList<PricePoint> = try {
-            gson.fromJson(item.priceHistoryJson, type) ?: mutableListOf()
+            gson.fromJson(base.priceHistoryJson, type) ?: mutableListOf()
         } catch (e: Exception) {
             mutableListOf()
         }
         history.add(0, PricePoint(System.currentTimeMillis(), price, source))
-        val trimmed = history.take(20)
-        val updated = item.copy(priceHistoryJson = gson.toJson(trimmed))
-        viewModel.update(updated)
-        collectible = updated
+        return base.copy(priceHistoryJson = gson.toJson(history.take(20)))
     }
 
     val dateFormat = remember { SimpleDateFormat("MMM d, yyyy h:mm a", Locale.getDefault()) }
+    val photos = item.allPhotos
+    val pref = item.preferredValue
 
     Scaffold(
         topBar = {
@@ -121,11 +128,17 @@ fun DetailScreen(
                             appendLine("Category: ${item.category}")
                             appendLine("Brand: ${item.brand}")
                             if (item.series.isNotBlank()) appendLine("Series: ${item.series}")
+                            if (item.variant.isNotBlank()) appendLine("Variant: ${item.variant}")
                             if (item.year != null) appendLine("Year: ${item.year}")
                             appendLine("Condition: ${item.condition}")
-                            if (item.estimatedValue > 0) appendLine("Est. Value: $${"%.2f".format(item.estimatedValue)}")
+                            if (item.quantity > 1) appendLine("Quantity: ${item.quantity}")
+                            if (item.location.isNotBlank()) appendLine("Location: ${item.location}")
+                            if (pref > 0) appendLine("Market Value: $${"%.2f".format(pref)}")
                             if (item.amazonPrice > 0) appendLine("Amazon: $${"%.2f".format(item.amazonPrice)}")
-                            if (item.ebayAvgSold > 0) appendLine("eBay Avg Sold: $${"%.2f".format(item.ebayAvgSold)}")
+                            if (item.ebayAvgSold > 0) {
+                                appendLine("eBay Avg Sold: $${"%.2f".format(item.ebayAvgSold)}")
+                                if (item.ebayLow > 0) appendLine("eBay Range: $${"%.2f".format(item.ebayLow)} – $${"%.2f".format(item.ebayHigh)} (n=${item.ebaySampleCount})")
+                            }
                             if (item.barcode.isNotBlank()) appendLine("Barcode: ${item.barcode}")
                             if (item.notes.isNotBlank()) appendLine("\nNotes:\n${item.notes}")
                         }
@@ -150,23 +163,39 @@ fun DetailScreen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            val photos = item.allPhotos
             if (photos.isNotEmpty()) {
-                photos.forEachIndexed { index, uri ->
+                if (photos.size == 1) {
                     AsyncImage(
-                        model = uri,
+                        model = photos[0],
                         contentDescription = null,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(if (index == 0) 260.dp else 180.dp)
-                            .clickable { showFullPhoto = true },
+                            .height(260.dp)
+                            .clickable {
+                                fullPhotoUri = photos[0]
+                                showFullPhoto = true
+                            },
                         contentScale = ContentScale.Crop
                     )
-                    if (index < photos.lastIndex) Spacer(Modifier.height(8.dp))
+                } else {
+                    LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        items(photos) { uri ->
+                            AsyncImage(
+                                model = uri,
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .size(200.dp)
+                                    .clickable {
+                                        fullPhotoUri = uri
+                                        showFullPhoto = true
+                                    },
+                                contentScale = ContentScale.Crop
+                            )
+                        }
+                    }
                 }
                 Text(
-                    if (photos.size > 1) "${photos.size} photos – tap to view full screen"
-                    else "Tap photo to view full screen",
+                    "Tap photo to view full screen",
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -196,37 +225,43 @@ fun DetailScreen(
             Text("Category: ${item.category}")
             Text("Brand: ${item.brand}")
             if (item.series.isNotBlank()) Text("Series: ${item.series}")
+            if (item.variant.isNotBlank()) Text("Variant: ${item.variant}")
             if (item.year != null) Text("Year: ${item.year}")
             Text("Condition: ${item.condition}")
+            if (item.quantity > 1) Text("Quantity: ${item.quantity}")
+            if (item.location.isNotBlank()) Text("Location: ${item.location}")
+            if (item.seriesTarget > 0) {
+                Text("Series target (set size): ${item.seriesTarget}")
+            }
 
-            if (item.preferredValue > 0) {
+            if (pref > 0) {
                 Text(
-                    "Preferred Market Value: $${"%.2f".format(item.preferredValue)}",
+                    "Market Value: $${"%.2f".format(pref)}" +
+                        if (item.quantity > 1) " × ${item.quantity} = $${"%.2f".format(item.portfolioValue)}" else "",
                     fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.colorScheme.primary
                 )
+                Text(
+                    "Source priority: eBay sold > Amazon > manual estimate",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
             }
-            if (item.estimatedValue > 0 && item.estimatedValue != item.preferredValue) {
-                Text("Manual Estimate: $${"%.2f".format(item.estimatedValue)}")
+            if (item.estimatedValue > 0 && item.estimatedValue != pref) {
+                Text("Manual estimate: $${"%.2f".format(item.estimatedValue)}")
             }
             if (item.purchasePrice > 0) {
                 Text("Purchase Price: $${"%.2f".format(item.purchasePrice)}")
                 if (item.hasRoiData) {
-                    val gain = item.unrealizedGain
+                    val g = item.unrealizedGain
+                    val sign = if (g >= 0) "+" else ""
                     Text(
-                        "Unrealized P/L: ${if (gain >= 0) "+" else ""}${"%.2f".format(gain)}",
-                        fontWeight = FontWeight.SemiBold,
-                        color = if (gain >= 0) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error
+                        "Unrealized P/L: $sign$${"%.2f".format(g)}",
+                        color = if (g >= 0) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error
                     )
                 }
             }
             if (item.barcode.isNotBlank()) Text("Barcode / UPC / ASIN: ${item.barcode}")
-            if (item.location.isNotBlank()) Text("Location: ${item.location}")
-            if (item.variant.isNotBlank()) Text("Variant / Exclusive: ${item.variant}")
-            if (item.series.isNotBlank() && item.seriesTarget > 0) {
-                Text("Series Target: ${item.seriesTarget} (for completion tracking)")
-            }
-            if (item.quantity > 1) Text("Quantity: ${item.quantity}")
 
             if (item.amazonPrice > 0) {
                 Text(
@@ -236,13 +271,12 @@ fun DetailScreen(
             }
             if (item.ebayAvgSold > 0) {
                 Text(
-                    "eBay Avg Sold: $${"%.2f".format(item.ebayAvgSold)}" +
-                        if (item.ebaySampleCount > 0) " (${item.ebaySampleCount} sales)" else "",
+                    "eBay Avg Sold: $${"%.2f".format(item.ebayAvgSold)}",
                     color = MaterialTheme.colorScheme.primary
                 )
                 if (item.ebayLow > 0 || item.ebayHigh > 0) {
                     Text(
-                        "eBay Range: $${"%.2f".format(item.ebayLow)} – $${"%.2f".format(item.ebayHigh)}",
+                        "eBay range: $${"%.2f".format(item.ebayLow)} – $${"%.2f".format(item.ebayHigh)} (${item.ebaySampleCount} sales)",
                         style = MaterialTheme.typography.bodySmall
                     )
                 }
@@ -261,7 +295,6 @@ fun DetailScreen(
                 Text(item.notes)
             }
 
-            // Price History
             val history: List<PricePoint> = try {
                 val type = object : TypeToken<List<PricePoint>>() {}.type
                 gson.fromJson(item.priceHistoryJson, type) ?: emptyList()
@@ -297,18 +330,19 @@ fun DetailScreen(
                     }
                     isLoadingAmazon = true
                     scope.launch {
-                        val price = valuationService.getAmazonPrice(apiKey, item.barcode, isUpc = true)
+                        val isUpc = item.barcode.length >= 12 && item.barcode.all { it.isDigit() }
+                        val price = valuationService.getAmazonPrice(apiKey, item.barcode, isUpc = isUpc)
                         isLoadingAmazon = false
                         if (price != null) {
                             haptic()
-                            val updated = item.copy(
+                            var updated = item.copy(
                                 amazonPrice = price,
                                 estimatedValue = if (item.estimatedValue == 0.0) price else item.estimatedValue,
                                 lastValuedAt = System.currentTimeMillis()
                             )
+                            updated = addPricePoint(price, "Amazon", updated)
                             viewModel.update(updated)
                             collectible = updated
-                            addPricePoint(price, "Amazon")
                             Toast.makeText(context, "Amazon: $${"%.2f".format(price)}", Toast.LENGTH_LONG).show()
                         } else {
                             Toast.makeText(context, "Could not fetch Amazon price", Toast.LENGTH_SHORT).show()
@@ -340,7 +374,7 @@ fun DetailScreen(
                         if (result != null) {
                             haptic()
                             lastSoldResult = result
-                            val updated = item.copy(
+                            var updated = item.copy(
                                 ebayAvgSold = result.avgPrice,
                                 ebayLow = result.minPrice,
                                 ebayHigh = result.maxPrice,
@@ -348,9 +382,9 @@ fun DetailScreen(
                                 estimatedValue = if (item.estimatedValue == 0.0) result.avgPrice else item.estimatedValue,
                                 lastValuedAt = System.currentTimeMillis()
                             )
+                            updated = addPricePoint(result.avgPrice, "eBay", updated)
                             viewModel.update(updated)
                             collectible = updated
-                            addPricePoint(result.avgPrice, "eBay")
                             showSoldComps = true
                         } else {
                             Toast.makeText(context, "No sold comps found", Toast.LENGTH_SHORT).show()
@@ -369,8 +403,7 @@ fun DetailScreen(
         }
     }
 
-    // Full-screen photo
-    if (showFullPhoto && item.photoUri.isNotBlank()) {
+    if (showFullPhoto && fullPhotoUri.isNotBlank()) {
         Dialog(
             onDismissRequest = { showFullPhoto = false },
             properties = DialogProperties(usePlatformDefaultWidth = false)
@@ -382,7 +415,7 @@ fun DetailScreen(
                 contentAlignment = Alignment.Center
             ) {
                 AsyncImage(
-                    model = item.photoUri,
+                    model = fullPhotoUri,
                     contentDescription = null,
                     modifier = Modifier.fillMaxWidth(),
                     contentScale = ContentScale.Fit
@@ -391,7 +424,6 @@ fun DetailScreen(
         }
     }
 
-    // Sold comps summary dialog
     if (showSoldComps && lastSoldResult != null) {
         AlertDialog(
             onDismissRequest = { showSoldComps = false },

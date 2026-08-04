@@ -33,19 +33,6 @@
             </intent-filter>
         </activity>
 
-        <!-- Home screen portfolio widget -->
-        <receiver
-            android:name=".PortfolioWidgetProvider"
-            android:exported="true"
-            android:label="Collection Value">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/portfolio_widget_info" />
-        </receiver>
-
         <!-- FileProvider for camera photos & CSV export -->
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -56,6 +43,19 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+        <!-- Home-screen portfolio widget -->
+        <receiver
+            android:name=".widget.PortfolioWidgetProvider"
+            android:exported="true"
+            android:label="Collection Value">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_portfolio_info" />
+        </receiver>
 
     </application>
 

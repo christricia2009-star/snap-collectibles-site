@@ -42,18 +42,11 @@ fun SettingsScreen(
     val prefs = remember { PreferencesManager(context) }
     val valuationService = remember { ValuationService() }
 
-    // API keys are stored only in SharedPreferences (never hardcoded in source).
-    var rainforestKey by remember {
-        mutableStateOf(prefs.rainforestApiKey)
-    }
-    var soldCompsKey by remember {
-        mutableStateOf(prefs.soldCompsApiKey)
-    }
-    var openRouterKey by remember {
-        mutableStateOf(prefs.openRouterApiKey)
-    }
+    // Keys live only in SharedPreferences — never hardcoded defaults.
+    var rainforestKey by remember { mutableStateOf(prefs.rainforestApiKey) }
+    var soldCompsKey by remember { mutableStateOf(prefs.soldCompsApiKey) }
+    var openRouterKey by remember { mutableStateOf(prefs.openRouterApiKey) }
 
-    // Show/hide toggles for each key
     var showRainforest by remember { mutableStateOf(false) }
     var showSoldComps by remember { mutableStateOf(false) }
     var showOpenRouter by remember { mutableStateOf(false) }
@@ -81,6 +74,7 @@ fun SettingsScreen(
     }
 
     val allItems by viewModel.allCollectibles.collectAsState()
+    val batchProgress by viewModel.batchRevalueProgress.collectAsState()
 
     Scaffold(
         topBar = {
@@ -105,12 +99,11 @@ fun SettingsScreen(
 
             Text("API Keys", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
             Text(
-                "Keys are masked. Tap the eye icon to reveal / edit.",
+                "Keys are stored only on this device (SharedPreferences). Never committed to source. Tap the eye icon to reveal / edit.",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
-            // ── Rainforest ──────────────────────────
             Text("Rainforest (Amazon prices)", style = MaterialTheme.typography.titleSmall)
             OutlinedTextField(
                 value = rainforestKey,
@@ -174,7 +167,6 @@ fun SettingsScreen(
                 }
             }
 
-            // ── SoldComps ───────────────────────────
             Text("SoldComps (eBay sold comps)", style = MaterialTheme.typography.titleSmall)
             OutlinedTextField(
                 value = soldCompsKey,
@@ -239,7 +231,6 @@ fun SettingsScreen(
                 }
             }
 
-            // ── OpenRouter ──────────────────────────
             Text("OpenRouter (AI photo recognition)", style = MaterialTheme.typography.titleSmall)
             OutlinedTextField(
                 value = openRouterKey,
@@ -272,10 +263,10 @@ fun SettingsScreen(
                         testingOpenRouter = true
                         openRouterStatus = null
                         scope.launch {
-                            kotlinx.coroutines.delay(800)
+                            kotlinx.coroutines.delay(400)
                             testingOpenRouter = false
                             openRouterStatus = openRouterKey.trim().startsWith("sk-") ||
-                                    openRouterKey.length > 20
+                                openRouterKey.length > 20
                             Toast.makeText(
                                 context,
                                 if (openRouterStatus == true) "OpenRouter key looks valid"
@@ -317,7 +308,6 @@ fun SettingsScreen(
 
             HorizontalDivider()
 
-            // Market Rate
             Text("Market", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
             OutlinedButton(
                 onClick = onMarketRateClick,
@@ -325,11 +315,45 @@ fun SettingsScreen(
             ) {
                 Text("Market Rate")
             }
+            OutlinedButton(
+                onClick = {
+                    if (prefs.rainforestApiKey.isBlank() && prefs.soldCompsApiKey.isBlank()) {
+                        Toast.makeText(
+                            context,
+                            "Save Rainforest or SoldComps API key first",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        return@OutlinedButton
+                    }
+                    viewModel.batchRevalue(all = true, force = false) { ok, total ->
+                        Toast.makeText(
+                            context,
+                            "Re-valued $ok of $total (skipped fresh <24h)",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                },
+                enabled = batchProgress == null,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Batch Re-value Entire Collection")
+            }
+            batchProgress?.let { (done, total) ->
+                LinearProgressIndicator(
+                    progress = { if (total > 0) done.toFloat() / total else 0f },
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Text("Re-valuing $done / $total…", style = MaterialTheme.typography.labelSmall)
+            }
 
             HorizontalDivider()
 
-            // Export / Import
             Text("Data", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+            Text(
+                "Schema upgrades may reset local data (destructive migration). Export CSV before updating the app.",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
 
             Button(
                 onClick = {
@@ -351,21 +375,20 @@ fun SettingsScreen(
 
             HorizontalDivider()
 
-            // Insurance
             Text("Insurance", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
             Text(
                 "Protect your collection. Many collectors use specialized collectibles insurance or a rider on their homeowners policy.",
                 style = MaterialTheme.typography.bodyMedium
             )
             Text(
-                "Tip: Export your collection CSV and keep an updated list of values for your insurance agent.",
+                "Tip: Export your collection CSV (includes preferred value, unrealized gain, location, quantity) and keep an updated list for your insurance agent.",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
             Spacer(Modifier.height(24.dp))
             Text(
-                "Snap Collectibles – Android",
+                "Snap Collectibles – Android 1.1",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )

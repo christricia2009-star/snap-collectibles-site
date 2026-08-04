@@ -20,11 +20,19 @@ class PreferencesManager(context: Context) {
         get() = prefs.getString("openrouter_api_key", "") ?: ""
         set(value) = prefs.edit().putString("openrouter_api_key", value).apply()
 
-    var lastPortfolioValue: Float
-        get() = prefs.getFloat("last_portfolio_value", 0f)
-        set(value) = prefs.edit().putFloat("last_portfolio_value", value).apply()
+    /** Cached portfolio snapshot for the home-screen widget. */
+    var lastPortfolioValue: Double
+        get() = prefs.getFloat("last_portfolio_value", 0f).toDouble()
+        set(value) = prefs.edit().putFloat("last_portfolio_value", value.toFloat()).apply()
 
     var lastPortfolioCount: Int
         get() = prefs.getInt("last_portfolio_count", 0)
         set(value) = prefs.edit().putInt("last_portfolio_count", value).apply()
+
+    fun updatePortfolioSnapshot(value: Double, count: Int) {
+        prefs.edit()
+            .putFloat("last_portfolio_value", value.toFloat())
+            .putInt("last_portfolio_count", count)
+            .apply()
+    }
 }
