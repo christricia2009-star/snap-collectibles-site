@@ -4,13 +4,14 @@ import { AnimatePresence, motion } from "motion/react";
 import RequestAccessButton from "./RequestAccessButton";
 import PlatformSwitcher from "./PlatformSwitcher";
 import PhoneMockup from "./PhoneMockup";
+import AppStoreButton from "./AppStoreButton";
 import { usePlatform } from "@/lib/platform";
 import { getHeroScreenshot } from "@/lib/screenshots";
 import { TESTING_EMAIL } from "@/lib/testing";
 
 /**
- * Hero section — portfolio-first headline, platform switcher,
- * request-access CTA, and platform-specific screenshot.
+ * Hero section — Scan / track / value / trade framing,
+ * soft App Store CTA, TestFlight-style beta request.
  */
 export default function Hero() {
   const { platform, label: platformLabel } = usePlatform();
@@ -45,11 +46,11 @@ export default function Hero() {
           >
             <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3.5 py-1.5 text-xs font-medium text-gold-soft backdrop-blur">
               <span className="h-1.5 w-1.5 rounded-full bg-gold animate-pulse" />
-              iOS &amp; Android · Currently in testing
+              iOS · Coming to the App Store
             </span>
           </motion.div>
 
-          {/* Platform switcher — primary control */}
+          {/* Platform switcher — preview control */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -65,8 +66,8 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
             className="text-4xl font-bold tracking-tight text-text sm:text-5xl lg:text-[3.5rem] lg:leading-[1.1]"
           >
-            Know what your collection is{" "}
-            <span className="text-gradient">really worth</span>
+            Scan, track, value, and{" "}
+            <span className="text-gradient">trade</span> your collectibles
           </motion.h1>
 
           <motion.p
@@ -75,7 +76,7 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
             className="mx-auto mt-5 max-w-lg text-base leading-relaxed text-text-muted sm:text-lg lg:mx-0"
           >
-            Snap Collectibles is the portfolio app for serious collectors on{" "}
+            Snap Collectibles is the{" "}
             <AnimatePresence mode="wait">
               <motion.span
                 key={platform}
@@ -87,13 +88,14 @@ export default function Hero() {
               >
                 {platformLabel}
               </motion.span>
-            </AnimatePresence>
-            . AI camera scanning, multi-marketplace price intelligence, and a
-            smart dashboard with market value, cost basis, and unrealized
-            profit — so you catalog faster and sell smarter.
+            </AnimatePresence>{" "}
+            app for collectors — especially Funko, built for multi-category
+            shelves. Identify pieces with the camera, keep inventory and a
+            photo shelf, research sold comps, manage wishlist and sells, and
+            trade with other collectors in-app.
           </motion.p>
 
-          {/* Testing callout */}
+          {/* Soft status callout */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -101,11 +103,10 @@ export default function Hero() {
             className="mx-auto mt-6 max-w-lg rounded-2xl border border-purple/25 bg-purple/10 px-4 py-3.5 text-left sm:px-5 lg:mx-0"
           >
             <p className="text-sm font-medium text-text">
-              Private beta on iOS &amp; Android — not on the App Store or Google
-              Play yet.
+              Coming to the App Store · Private testing available now
             </p>
             <p className="mt-1.5 text-sm leading-relaxed text-text-muted">
-              Email{" "}
+              Want early access? Email{" "}
               <a
                 href={`mailto:${TESTING_EMAIL}`}
                 className="font-medium text-purple-bright underline-offset-2 hover:underline"
@@ -114,9 +115,8 @@ export default function Hero() {
               </a>{" "}
               with your <strong className="text-text">name</strong>,{" "}
               <strong className="text-text">email</strong>,{" "}
-              <strong className="text-text">platform</strong> (iOS or Android),
-              and a short note about what you collect (e.g. Funko, sports cards,
-              sneakers).
+              <strong className="text-text">platform</strong>, and what you
+              collect (e.g. Funko, cards, figures).
             </p>
           </motion.div>
 
@@ -126,7 +126,8 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.28, ease: [0.22, 1, 0.36, 1] }}
             className="mt-7 flex flex-col items-center gap-3 sm:flex-row sm:flex-wrap sm:justify-center lg:justify-start"
           >
-            <RequestAccessButton size="lg" label="Request Access to Test" />
+            <RequestAccessButton size="lg" label="Request Early Access" />
+            <AppStoreButton size="lg" disabled />
           </motion.div>
 
           <motion.p
@@ -135,12 +136,12 @@ export default function Hero() {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="mt-5 text-xs text-text-dim"
           >
-            Free beta invite · iOS &amp; Android · Portfolio value, scan &amp;
-            sell tools
+            Sign in with Apple · Cloud backup when signed in · Peer-to-peer
+            trades
           </motion.p>
         </div>
 
-        {/* Phone mockup — platform-specific collection overview */}
+        {/* Phone mockup */}
         <motion.div
           initial={{ opacity: 0, scale: 0.92, y: 32 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}

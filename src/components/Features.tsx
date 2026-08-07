@@ -5,8 +5,8 @@ import { motion } from "motion/react";
 import SectionHeading from "./SectionHeading";
 
 /**
- * Feature cards — easy to edit copy and icons.
- * Replace icon SVGs or swap to image icons as needed.
+ * Feature cards — aligned to current Snap Collectibles iOS app capabilities.
+ * Keep claims modest: research helpers, not appraisals or guarantees.
  */
 
 type Feature = {
@@ -19,31 +19,9 @@ type Feature = {
 
 const features: Feature[] = [
   {
-    title: "Smart Portfolio Dashboard",
+    title: "Camera scan with categories",
     description:
-      "See estimated market value, cost basis, and unrealized profit/loss in one glance. Your collection stops being a list — it becomes a portfolio.",
-    accent: "from-gold/20 to-gold/5 text-gold",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className="h-6 w-6">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
-      </svg>
-    ),
-  },
-  {
-    title: "Multi-marketplace price intelligence",
-    description:
-      "Sold comps first. eBay prioritized, then Amazon, StockX, TCGPlayer, and 130 Point — so values reflect what the market actually pays.",
-    accent: "from-purple/20 to-purple/5 text-purple-bright",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className="h-6 w-6">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-    ),
-  },
-  {
-    title: "AI vision scanning",
-    description:
-      "Powerful camera + AI for Funko Pops and other collectibles. Scan shelves or single pieces — identify faster, catalog with less typing.",
+      "Point the camera at a piece, pick a category, and identify it faster. Built with Funko in mind — ready for multi-category collections.",
     accent: "from-pink/20 to-pink/5 text-pink-hot",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className="h-6 w-6">
@@ -53,57 +31,57 @@ const features: Feature[] = [
     ),
   },
   {
-    title: "One-tap listing drafts",
+    title: "Sold comps & price helpers",
     description:
-      "Turn inventory into sell-ready drafts for eBay, Mercari, Whatnot, Depop, and Amazon. Less busywork between “I own it” and “it’s listed.”",
-    accent: "from-purple/20 to-pink/10 text-purple-bright",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className="h-6 w-6">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-      </svg>
-    ),
-  },
-  {
-    title: "CSV & JSON import/export",
-    description:
-      "Full data portability with automatic duplicate detection. Bring collections in cleanly. Export for backup, insurance, or spreadsheets.",
-    accent: "from-gold/15 to-purple/10 text-gold-soft",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className="h-6 w-6">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-      </svg>
-    ),
-  },
-  {
-    title: "Bulk select & organize",
-    description:
-      "Select many items at once. Move to Selling or Wishlist. Delete in batch. Manage large collections without the endless one-by-one taps.",
-    accent: "from-pink/15 to-purple/10 text-pink-hot",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className="h-6 w-6">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-    ),
-  },
-  {
-    title: "Fast search & category filters",
-    description:
-      "Find any piece instantly. Filter by category, list, and more — so shelves of hundreds stay as usable as a starter collection.",
+      "Research what similar items have sold for and check marketplace-style price helpers when available. Tools for your research — not a formal appraisal or guaranteed value.",
     accent: "from-purple/20 to-purple/5 text-purple-bright",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className="h-6 w-6">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
     ),
   },
   {
-    title: "Local photos + stock enrichment",
+    title: "Collection inventory",
     description:
-      "Your photos stay on-device. Automatic stock image enrichment fills gaps so every item looks complete — without cloud lock-in.",
+      "Keep everything in one place with list and grid views. Swipe left to delete, swipe right to start a trade with the item pre-filled — less typing, faster actions.",
     accent: "from-gold/20 to-gold/5 text-gold",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className="h-6 w-6">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
+      </svg>
+    ),
+  },
+  {
+    title: "My Shelf",
+    description:
+      "Show off a photo-only shelf view of what you own. Clean display for browsing your collection the way it looks on the wall — not just as rows of data.",
+    accent: "from-pink/15 to-purple/10 text-pink-hot",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className="h-6 w-6">
         <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0022.5 18.75V5.25A2.25 2.25 0 0020.25 3H3.75A2.25 2.25 0 001.5 5.25v13.5A2.25 2.25 0 003.75 21z" />
+      </svg>
+    ),
+  },
+  {
+    title: "Wishlist, selling & sold",
+    description:
+      "Track what you want next and what you’re ready to sell. Keep selling and sold status organized so inventory stays honest as pieces move on.",
+    accent: "from-gold/15 to-purple/10 text-gold-soft",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className="h-6 w-6">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+      </svg>
+    ),
+  },
+  {
+    title: "Trades & in-app chat",
+    description:
+      "Post trade offers, pick items from your inventory, browse the trade feed, open trade detail, and chat in-app. Set contact helpers (username / Facebook) so peers can connect. Trades are peer-to-peer between collectors.",
+    accent: "from-purple/20 to-pink/10 text-purple-bright",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className="h-6 w-6">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
       </svg>
     ),
   },
@@ -131,8 +109,8 @@ export default function Features() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           eyebrow="Features"
-          title="Built for collectors who mean business"
-          subtitle="Portfolio intelligence, real market prices, AI scanning, and sell-ready tools — on both iOS and Android. Not another barcode notepad."
+          title="Built for how collectors actually collect"
+          subtitle="Scan and save pieces, research sold comps, show your shelf, and trade with peers — without overpromising on values or deals."
         />
 
         <motion.div
@@ -140,7 +118,7 @@ export default function Features() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-60px" }}
-          className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5"
+          className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5"
         >
           {features.map((feature) => (
             <motion.article
@@ -162,6 +140,43 @@ export default function Features() {
               </p>
             </motion.article>
           ))}
+        </motion.div>
+
+        {/* Extra capabilities — short, scannable */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="mt-10 rounded-2xl border border-border-subtle bg-bg-card/60 px-5 py-5 sm:px-7 sm:py-6"
+        >
+          <p className="text-sm font-semibold text-text">Also included</p>
+          <ul className="mt-3 grid gap-2 text-sm text-text-muted sm:grid-cols-2">
+            <li className="flex gap-2">
+              <span className="text-purple-bright" aria-hidden="true">
+                ·
+              </span>
+              Sign in with Apple for account access
+            </li>
+            <li className="flex gap-2">
+              <span className="text-purple-bright" aria-hidden="true">
+                ·
+              </span>
+              Cloud backup &amp; restore of your collection while signed in
+            </li>
+            <li className="flex gap-2">
+              <span className="text-purple-bright" aria-hidden="true">
+                ·
+              </span>
+              Contact setup for trades (username / Facebook helpers)
+            </li>
+            <li className="flex gap-2">
+              <span className="text-purple-bright" aria-hidden="true">
+                ·
+              </span>
+              More section with stats and trade history–style extras
+            </li>
+          </ul>
         </motion.div>
       </div>
     </section>

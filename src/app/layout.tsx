@@ -9,37 +9,37 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Snap Collectibles — Portfolio Value & AI Scan for iOS & Android",
+  title: "Snap Collectibles — Scan, Track, Value & Trade Collectibles",
   description:
-    "The collectibles portfolio app for iOS and Android. Smart dashboard with market value, cost basis, and P/L. Multi-marketplace pricing, AI camera scanning, listing drafts, and full CSV/JSON import-export. Request free beta access.",
+    "The iOS app for collectors. Camera scan with category selection, sold comps and marketplace price helpers, personal inventory and My Shelf, wishlist, selling tools, peer-to-peer trades with in-app chat, and cloud backup when signed in with Apple. Coming to the App Store.",
   keywords: [
     "collectibles",
     "collection app",
-    "portfolio tracker",
     "Funko Pop scanner",
-    "AI vision scan",
+    "camera scan",
+    "sold comps",
     "eBay comps",
-    "market value",
-    "cost basis",
+    "collection inventory",
     "wishlist",
+    "trade collectibles",
+    "Sign in with Apple",
     "iOS",
-    "Android",
-    "beta",
+    "TestFlight",
   ],
   authors: [{ name: "Snap Collectibles", url: "https://snapcollectibles.com" }],
   openGraph: {
-    title: "Snap Collectibles — Know What Your Collection Is Worth",
+    title: "Snap Collectibles — Scan, Track, Value & Trade",
     description:
-      "Portfolio dashboard, multi-marketplace price intelligence, and AI scanning on iOS and Android. Request free beta access.",
+      "Identify collectibles with the camera, track your inventory and shelf, research sold comps, and trade with other collectors — all in one iOS app.",
     url: "https://snapcollectibles.com",
     siteName: "Snap Collectibles",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Snap Collectibles — Know What Your Collection Is Worth",
+    title: "Snap Collectibles — Scan, Track, Value & Trade",
     description:
-      "Portfolio dashboard, multi-marketplace price intelligence, and AI scanning on iOS and Android. Request free beta access.",
+      "Identify collectibles with the camera, track your inventory and shelf, research sold comps, and trade with other collectors — all in one iOS app.",
   },
   metadataBase: new URL("https://snapcollectibles.com"),
   icons: {

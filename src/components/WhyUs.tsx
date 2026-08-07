@@ -5,6 +5,7 @@ import SectionHeading from "./SectionHeading";
 
 /**
  * Comparison section — Snap Collectibles vs typical collectibles trackers.
+ * Keep claims aligned to shipping features; no inventing guarantees.
  */
 
 type Row = {
@@ -15,39 +16,39 @@ type Row = {
 
 const rows: Row[] = [
   {
-    capability: "Portfolio view",
-    typical: "Item count and a rough sum",
-    snap: "Market value, cost basis & unrealized P/L",
+    capability: "Identify items",
+    typical: "Manual typing or barcode only",
+    snap: "Camera scan with category selection",
   },
   {
-    capability: "Pricing",
-    typical: "Manual entry or a single estimate",
-    snap: "eBay sold first, then Amazon, StockX, TCGPlayer, 130 Point",
+    capability: "Pricing help",
+    typical: "One estimate or nothing",
+    snap: "Sold comps + marketplace price helpers (research, not appraisal)",
   },
   {
-    capability: "Scanning",
-    typical: "Barcode only or one AI guess",
-    snap: "Camera + AI vision for Funko & more",
+    capability: "Collection views",
+    typical: "A single list",
+    snap: "List, grid, and My Shelf (photo-only display)",
   },
   {
-    capability: "Selling",
-    typical: "Copy-paste into marketplaces",
-    snap: "One-tap drafts for eBay, Mercari, Whatnot, Depop, Amazon",
+    capability: "Wishlist & selling",
+    typical: "Notes in another app",
+    snap: "Wishlist plus selling / sold tracking in one place",
   },
   {
-    capability: "Data control",
-    typical: "Basic CSV or locked in-app",
-    snap: "Full CSV & JSON import/export + duplicate detection",
+    capability: "Trading",
+    typical: "Social posts and DMs elsewhere",
+    snap: "Trade offers, inventory pick, feed, detail, and in-app chat",
   },
   {
-    capability: "Scale",
-    typical: "One item at a time",
-    snap: "Bulk select, move to Selling/Wishlist, delete",
+    capability: "Quick actions",
+    typical: "Long menus for every edit",
+    snap: "Swipe left to delete, swipe right to pre-fill a trade",
   },
   {
-    capability: "Photos",
-    typical: "Cloud-only or blank placeholders",
-    snap: "Local storage + automatic stock image enrichment",
+    capability: "Backup",
+    typical: "Device-only or unclear",
+    snap: "Cloud backup & restore while signed in with Apple",
   },
 ];
 
@@ -62,8 +63,8 @@ export default function WhyUs() {
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           eyebrow="Why Snap Collectibles"
-          title="More than a collectibles tracker"
-          subtitle="Typical apps stop at inventory. Snap Collectibles is built to value, organize, and sell — with the same power on iOS and Android."
+          title="More than a list of what you own"
+          subtitle="Identify, organize, research prices, and trade with other collectors — with clear limits on what pricing and trades mean."
         />
 
         {/* Desktop / tablet table */}

@@ -15,12 +15,12 @@ export default function SupportPage() {
   return (
     <LegalPageShell
       title="Support & Contact"
-      description="We’re here to help with beta access, app questions, and feedback for Snap Collectibles on iOS and Android."
+      description="We’re here to help with early access, app questions, and feedback for Snap Collectibles."
     >
       <section className="space-y-3">
         <h2 className="text-lg font-semibold text-text">Contact email</h2>
         <p>
-          For beta access requests, testing questions, and general support,
+          For early access requests, testing questions, and general support,
           email:
         </p>
         <p>
@@ -45,12 +45,11 @@ export default function SupportPage() {
 
       <section className="space-y-3">
         <h2 className="text-lg font-semibold text-text">
-          Request access to test
+          Request early access
         </h2>
         <p>
-          Snap Collectibles is in private testing on iOS and Android and is not
-          yet available on the App Store or Google Play. To request access,
-          email{" "}
+          Snap Collectibles is coming to the App Store. Private testing may be
+          available before public release. To request access, email{" "}
           <a
             href={`mailto:${TESTING_EMAIL}`}
             className="text-purple-bright underline-offset-2 hover:underline"
@@ -67,11 +66,12 @@ export default function SupportPage() {
             <strong className="text-text">Email</strong>
           </li>
           <li>
-            <strong className="text-text">Platform</strong> (iOS or Android)
+            <strong className="text-text">Platform</strong> (iOS or Android, if
+            relevant)
           </li>
           <li>
             <strong className="text-text">What you collect</strong> (e.g. Funko,
-            sports cards, sneakers)
+            figures, cards)
           </li>
         </ul>
         <p>
@@ -87,11 +87,15 @@ export default function SupportPage() {
       <section className="space-y-3">
         <h2 className="text-lg font-semibold text-text">Common topics</h2>
         <ul className="list-disc space-y-2 pl-5">
-          <li>Beta invite status and TestFlight / Android tester setup</li>
-          <li>Multi-item scanning and camera permissions</li>
-          <li>Collection organization, valuations, and wishlist features</li>
+          <li>Early access / TestFlight invite status</li>
+          <li>Camera scan, categories, and photo permissions</li>
+          <li>Collection, My Shelf, wishlist, and selling / sold tracking</li>
+          <li>Sold comps and price helpers (research tools, not appraisals)</li>
+          <li>Trades, in-app chat, and contact helpers</li>
+          <li>Sign in with Apple and cloud backup / restore</li>
           <li>Bug reports and product feedback</li>
-          <li>Privacy or data requests (see our{" "}
+          <li>
+            Privacy or data requests (see our{" "}
             <Link
               href="/privacy"
               className="text-purple-bright underline-offset-2 hover:underline"

@@ -5,8 +5,7 @@ import { motion, AnimatePresence } from "motion/react";
 import SectionHeading from "./SectionHeading";
 
 /**
- * FAQ accordion.
- * Edit the faqs array to update questions and answers.
+ * FAQ accordion — accurate, privacy-minded, no overclaims.
  */
 
 type FAQItem = {
@@ -16,49 +15,49 @@ type FAQItem = {
 
 const faqs: FAQItem[] = [
   {
-    question: "Is Snap Collectibles on the App Store or Google Play?",
+    question: "Is Snap Collectibles on the App Store?",
     answer:
-      "Not yet — both the iOS and Android apps are currently in private testing. Email Testing@snapcollectibles.com with your name, email, platform (iOS or Android), and a short note about what you collect. We’ll send a free invite when spots are available.",
+      "Not yet — it’s coming to the App Store. While we’re preparing for public release, you can request early access by emailing Testing@snapcollectibles.com with your name, email, platform, and what you collect.",
   },
   {
-    question: "Does it work the same on iOS and Android?",
+    question: "Is this the same app as Collection Vault?",
     answer:
-      "Yes. Snap Collectibles is built for both platforms with the same core experience: portfolio dashboard, multi-marketplace pricing, AI scanning, bulk tools, import/export, and listing drafts. Use the platform switcher on this page to preview screens for each.",
+      "Yes. The same app you’ve seen in TestFlight or earlier testing is now publicly named Snap Collectibles. Features and branding on this site refer to that product.",
   },
   {
-    question: "How does the portfolio dashboard work?",
+    question: "Do I need Sign in with Apple?",
     answer:
-      "Your dashboard shows estimated market value, cost basis, and unrealized profit/loss across your collection. It’s designed so you always know where you stand — not just how many items you own.",
+      "Sign in with Apple is how you sign in for account features. Cloud backup and restore of your collection require being signed in. You can still explore local collection tools depending on the screen — backup needs a signed-in account.",
   },
   {
-    question: "Where do market valuations come from?",
+    question: "Where do prices and “values” come from?",
     answer:
-      "We use multi-marketplace price intelligence. eBay sold comps are prioritized first, then Amazon, StockX, TCGPlayer, and 130 Point — so values track what buyers actually pay, not inflated asking prices.",
+      "Snap Collectibles offers sold comps and marketplace-style price helpers to support your research — for example eBay-style sold comps and other marketplace price info when available. These are research tools, not formal appraisals, and we do not guarantee values or sale prices.",
   },
   {
-    question: "Can I scan collectibles with the camera?",
+    question: "How do trades work?",
     answer:
-      "Yes. Snap Collectibles uses powerful camera + AI vision scanning for Funko Pops and other collectibles. Identify pieces faster and build your catalog with less manual typing.",
+      "Trades are peer-to-peer between collectors. You can post offers, pick an item from your inventory so less typing is needed, browse the trade feed, open trade detail, and chat in-app. You can also set contact helpers (username / Facebook) so other collectors know how to reach you. Snap Collectibles does not insure trades or guarantee outcomes between users.",
   },
   {
-    question: "Can I list items to marketplaces from the app?",
+    question: "What can I do with my collection in the app?",
     answer:
-      "You can create one-tap listing drafts for eBay, Mercari, Whatnot, Depop, and Amazon — so moving from inventory to “ready to sell” takes far less busywork.",
+      "Maintain personal inventory in list and grid views, display pieces on My Shelf (photo-only), keep a wishlist, and track selling / sold status. Swipe left on collection items to delete; swipe right to start a trade with that item pre-filled.",
   },
   {
-    question: "Can I import or export my collection?",
+    question: "Is my collection backed up in the cloud?",
     answer:
-      "Yes. Full CSV and JSON import/export is supported, with automatic duplicate detection on import. Your data stays portable for backup, insurance, or spreadsheets.",
+      "Yes — when you’re signed in, you can back up and restore your collection to the cloud. Sign-in is required for cloud backup. Camera and photo access is used for identification and collection photos you choose to add.",
   },
   {
-    question: "Is my collection data private?",
+    question: "How does Snap Collectibles use my camera and photos?",
     answer:
-      "Your collection is yours. Photos store locally on your device, with automatic stock image enrichment when helpful. We take privacy seriously and only use data to provide the product experience. See our Privacy Policy for full details.",
+      "Camera and photos are used to help identify collectibles and to support your collection and shelf views. Trades use Sign in with Apple plus any optional contact info you choose to provide. See our Privacy Policy for full details.",
   },
   {
-    question: "Is the beta free?",
+    question: "Is early access free?",
     answer:
-      "Yes. Beta access is free while we’re in testing on iOS and Android. Pricing for public store releases will be clear in-app before anything is charged.",
+      "Early testing access is free while we’re in private testing. We won’t invent pricing here — anything for a public App Store release will be clear in the app or store listing before you’re charged.",
   },
 ];
 
@@ -123,7 +122,7 @@ export default function FAQ() {
         <SectionHeading
           eyebrow="FAQ"
           title="Questions, answered"
-          subtitle="Everything you need to know about the iOS & Android beta. Still stuck? Email Testing@snapcollectibles.com or support."
+          subtitle="Straight answers about scanning, pricing research, trades, and backup. Still stuck? Email Testing@snapcollectibles.com."
         />
 
         <motion.div

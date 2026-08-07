@@ -4,34 +4,41 @@ import { motion } from "motion/react";
 import SectionHeading from "./SectionHeading";
 
 /**
- * Three-step “How it works” section.
- * Edit steps array to change copy or order.
+ * Four-step “How it works” — Scan → Save → Value → Trade.
  */
 
 const steps = [
   {
     step: "01",
-    title: "Scan with AI vision",
+    title: "Scan",
     description:
-      "Point the camera at Funko Pops or other collectibles. Identify pieces fast, add them to your collection, and skip the endless manual entry.",
+      "Open the camera, choose a category, and identify collectibles without endless manual entry.",
     color: "text-purple-bright",
     ring: "ring-purple/30",
   },
   {
     step: "02",
-    title: "See real market value",
+    title: "Save",
     description:
-      "Multi-marketplace intelligence prioritizes eBay sold comps, then Amazon, StockX, TCGPlayer, and 130 Point. Track cost basis and unrealized P/L on your dashboard.",
+      "Add pieces to your collection inventory. Browse list or grid, build a wishlist, and show them on My Shelf.",
     color: "text-pink-hot",
     ring: "ring-pink/30",
   },
   {
     step: "03",
-    title: "Organize, export, sell",
+    title: "Value",
     description:
-      "Bulk move to Selling or Wishlist. Search and filter at speed. Export CSV or JSON. Draft listings for eBay, Mercari, Whatnot, Depop, and Amazon in one tap.",
+      "Use sold comps and marketplace price helpers as research tools. Check what the market has been paying — not a guaranteed appraisal.",
     color: "text-gold",
     ring: "ring-gold/30",
+  },
+  {
+    step: "04",
+    title: "Trade",
+    description:
+      "Post offers, pick items from inventory, follow the trade feed, and chat in-app. Peer-to-peer between collectors.",
+    color: "text-purple-bright",
+    ring: "ring-purple/30",
   },
 ];
 
@@ -41,14 +48,14 @@ export default function HowItWorks() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           eyebrow="How it works"
-          title="From shelf to portfolio in three steps"
-          subtitle="Scan smarter. Value with real comps. Organize and list without the spreadsheet grind — on iOS and Android."
+          title="Scan → Save → Value → Trade"
+          subtitle="A simple loop for collectors: identify pieces, keep them organized, research prices, and trade when you’re ready."
         />
 
-        <div className="relative mt-16 grid gap-8 md:grid-cols-3 md:gap-6">
+        <div className="relative mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
           {/* Connecting line (desktop) */}
           <div
-            className="pointer-events-none absolute left-[16.5%] right-[16.5%] top-10 hidden h-px bg-gradient-to-r from-purple/40 via-pink/40 to-gold/40 md:block"
+            className="pointer-events-none absolute left-[12%] right-[12%] top-10 hidden h-px bg-gradient-to-r from-purple/40 via-pink/40 to-gold/40 lg:block"
             aria-hidden="true"
           />
 
@@ -60,7 +67,7 @@ export default function HowItWorks() {
               viewport={{ once: true, margin: "-60px" }}
               transition={{
                 duration: 0.55,
-                delay: i * 0.12,
+                delay: i * 0.1,
                 ease: [0.22, 1, 0.36, 1],
               }}
               className="relative flex flex-col items-center text-center"

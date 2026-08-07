@@ -3,11 +3,12 @@
 import { motion } from "motion/react";
 import RequestAccessButton from "./RequestAccessButton";
 import PlatformSwitcher from "./PlatformSwitcher";
+import AppStoreButton from "./AppStoreButton";
 import { usePlatform } from "@/lib/platform";
 import { TESTING_EMAIL } from "@/lib/testing";
 
 /**
- * Final conversion-focused CTA — request beta access for iOS or Android.
+ * Final conversion-focused CTA — soft App Store + early access request.
  */
 export default function FinalCTA() {
   const { label: platformLabel } = usePlatform();
@@ -32,16 +33,16 @@ export default function FinalCTA() {
           className="rounded-3xl border border-border bg-bg-card/80 px-6 py-12 shadow-2xl backdrop-blur-sm sm:px-12 sm:py-16"
         >
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-gold-soft">
-            Join the beta
+            Coming to the App Store
           </p>
           <h2 className="text-3xl font-bold tracking-tight text-text sm:text-4xl md:text-5xl">
-            Own the smartest view of your{" "}
-            <span className="text-gradient">collection</span>
+            Ready to{" "}
+            <span className="text-gradient">scan, save, and trade</span>?
           </h2>
           <p className="mx-auto mt-4 max-w-lg text-base text-text-muted sm:text-lg">
-            Portfolio value, multi-marketplace pricing, AI scanning, and sell
-            drafts — private beta on iOS and Android. Request free access to
-            test.
+            Snap Collectibles helps you identify collectibles, keep inventory and
+            a photo shelf, research sold comps, and trade with peers. Request
+            early access while we prepare for the App Store.
           </p>
 
           <div className="mt-6 flex justify-center">
@@ -49,7 +50,7 @@ export default function FinalCTA() {
           </div>
 
           <div className="mx-auto mt-6 max-w-md rounded-2xl border border-border-subtle bg-bg/60 px-4 py-4 text-left text-sm text-text-muted sm:px-5">
-            <p className="font-medium text-text">How to request access</p>
+            <p className="font-medium text-text">How to request early access</p>
             <ol className="mt-2 list-decimal space-y-1.5 pl-5 leading-relaxed">
               <li>
                 Email{" "}
@@ -63,10 +64,10 @@ export default function FinalCTA() {
               <li>
                 Include your <strong className="text-text">name</strong>,{" "}
                 <strong className="text-text">email</strong>, and{" "}
-                <strong className="text-text">platform</strong> (iOS or Android)
+                <strong className="text-text">platform</strong>
               </li>
               <li>
-                Tell us a bit about what you collect (Funko, sports cards, etc.)
+                Tell us a bit about what you collect (Funko, figures, etc.)
               </li>
             </ol>
             <p className="mt-3 text-xs text-text-dim">
@@ -75,12 +76,12 @@ export default function FinalCTA() {
             </p>
           </div>
 
-          <div className="mt-8 flex flex-col items-center justify-center gap-3">
-            <RequestAccessButton size="lg" label="Request Access to Test" />
+          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <RequestAccessButton size="lg" label="Request Early Access" />
+            <AppStoreButton size="lg" disabled />
           </div>
           <p className="mt-5 text-xs text-text-dim">
-            iOS &amp; Android · Free beta invite · Not yet on App Store or Google
-            Play
+            Coming to the App Store · Free early testing while available
           </p>
         </motion.div>
       </div>

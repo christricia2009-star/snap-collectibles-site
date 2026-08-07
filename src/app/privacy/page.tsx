@@ -4,28 +4,31 @@ import LegalPageShell from "@/components/LegalPageShell";
 export const metadata: Metadata = {
   title: "Privacy Policy — Snap Collectibles",
   description:
-    "Privacy policy for the Snap Collectibles iOS and Android apps and website. How we collect, use, and protect your data.",
+    "Privacy policy for the Snap Collectibles app and website. How we collect, use, and protect your data — including camera, Sign in with Apple, trades, and cloud backup.",
 };
 
 const CONTACT_EMAIL = "Testing@snapcollectibles.com";
 const SUPPORT_EMAIL = "support@snapcollectibles.com";
 
 /**
- * Privacy Policy suitable for App Store / Google Play listings.
+ * Privacy Policy suitable for App Store listings.
  * Not formal legal advice — review with counsel before public launch if needed.
+ * Avoids internal stack names; stays accurate to product behavior.
  */
 export default function PrivacyPage() {
   return (
     <LegalPageShell
       title="Privacy Policy"
       description="This Privacy Policy explains how Snap Collectibles (“we,” “us,” or “our”) collects, uses, and shares information when you use our mobile applications and website."
-      lastUpdated="August 3, 2026"
+      lastUpdated="August 7, 2026"
     >
       <section className="space-y-3">
         <h2 className="text-lg font-semibold text-text">1. Who we are</h2>
         <p>
-          Snap Collectibles is a collectibles cataloging and valuation app for
-          iOS and Android. Our website is available at{" "}
+          Snap Collectibles is a collectibles identification, inventory,
+          research, and trading app (public name for the product also known
+          historically as Collection Vault in testing). Our website is available
+          at{" "}
           <a
             href="https://snapcollectibles.com"
             className="text-purple-bright underline-offset-2 hover:underline"
@@ -57,21 +60,31 @@ export default function PrivacyPage() {
         <p>Depending on how you use the app and site, we may collect:</p>
         <ul className="list-disc space-y-2 pl-5">
           <li>
-            <strong className="text-text">Account &amp; contact information</strong>{" "}
-            — such as name and email address when you request beta access or
-            contact support.
+            <strong className="text-text">Account information</strong> — when
+            you Sign in with Apple, we receive identifiers and account details
+            Apple provides (and any name or email you choose to share).
+          </li>
+          <li>
+            <strong className="text-text">Contact &amp; support information</strong>{" "}
+            — such as name and email when you request early access or contact
+            support.
           </li>
           <li>
             <strong className="text-text">Collection data you provide</strong>{" "}
-            — item names, notes, tags, wishlists, quantities, and other details
-            you enter to organize your collection.
+            — item details, notes, wishlist, selling/sold status, shelf photos,
+            and other information you enter to organize your collection.
           </li>
           <li>
-            <strong className="text-text">Photos and camera input</strong> — images
-            you capture or select so we can identify items (including multi-item
-            detection in a single photo) and barcode scanning where supported.
-            Camera and photo library access is used only when you choose to scan
-            or add an image.
+            <strong className="text-text">Photos and camera input</strong> —
+            images you capture or select for identification and for your
+            collection or My Shelf display. Camera and photo library access is
+            used only when you choose to scan or add an image.
+          </li>
+          <li>
+            <strong className="text-text">Trade &amp; contact helpers</strong>{" "}
+            — trade offers, messages you send in in-app chat, and optional
+            contact info you set for trades (such as username or Facebook
+            helpers) so other collectors can reach you.
           </li>
           <li>
             <strong className="text-text">Device &amp; usage information</strong>{" "}
@@ -93,15 +106,22 @@ export default function PrivacyPage() {
         <p>We use information to:</p>
         <ul className="list-disc space-y-2 pl-5">
           <li>
-            Provide core features: multi-item photo scanning, barcode scanning,
-            item identification, collection organization, wishlists, and related
-            tools.
+            Provide core features: camera scanning with category selection,
+            collection inventory (list and grid), My Shelf, wishlist, selling
+            and sold tracking, sold comps and marketplace price helpers, trades
+            (offers, feed, detail, chat), and related tools.
           </li>
           <li>
-            Estimate market values using publicly available market data (such as
-            eBay sold comps) and show valuation information in the app.
+            Show pricing research helpers using publicly available market data
+            (such as sold comps). These are research tools, not formal
+            appraisals, and do not guarantee values or sale prices.
           </li>
-          <li>Respond to support and beta access requests.</li>
+          <li>
+            Enable cloud backup and restore of your collection while you are
+            signed in.
+          </li>
+          <li>Facilitate peer-to-peer trades between collectors who use the app.</li>
+          <li>Respond to support and early access requests.</li>
           <li>Maintain security, debug issues, and improve the product.</li>
           <li>
             Comply with legal obligations and enforce our terms when necessary.
@@ -115,12 +135,12 @@ export default function PrivacyPage() {
 
       <section className="space-y-3">
         <h2 className="text-lg font-semibold text-text">
-          4. Camera, photos, and barcode scanning
+          4. Camera, photos, and identification
         </h2>
         <p>
           Snap Collectibles requests camera and/or photo library permission so
-          you can scan barcodes and photograph collectibles — including detecting
-          multiple items in one photo. Images are processed to identify items and
+          you can photograph collectibles for identification and for your
+          collection or shelf views. Images are processed to identify items and
           may be uploaded to our services (or trusted processors) solely to
           deliver identification and cataloging features. You can deny camera or
           photo access in system settings; some scan features will not work
@@ -131,7 +151,21 @@ export default function PrivacyPage() {
 
       <section className="space-y-3">
         <h2 className="text-lg font-semibold text-text">
-          5. Third-party services
+          5. Sign in with Apple, cloud backup, and trades
+        </h2>
+        <p>
+          Account features use Sign in with Apple. Cloud backup and restore of
+          your collection require that you are signed in. Trade features use your
+          signed-in account and any optional contact information you provide so
+          other collectors can connect with you. Trades are peer-to-peer; Snap
+          Collectibles does not insure trades or guarantee outcomes between
+          users.
+        </p>
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="text-lg font-semibold text-text">
+          6. Third-party services
         </h2>
         <p>
           We may use third-party services to operate the app and website,
@@ -139,8 +173,13 @@ export default function PrivacyPage() {
         </p>
         <ul className="list-disc space-y-2 pl-5">
           <li>
+            <strong className="text-text">Apple Sign in &amp; platform services</strong>{" "}
+            — for authentication and related Apple-provided account features.
+          </li>
+          <li>
             <strong className="text-text">Cloud hosting &amp; storage</strong> —
-            to run the service and store account or collection data securely.
+            to run the service and store account or collection data securely
+            when you use backup and online features.
           </li>
           <li>
             <strong className="text-text">Analytics &amp; crash reporting</strong>{" "}
@@ -148,24 +187,26 @@ export default function PrivacyPage() {
           </li>
           <li>
             <strong className="text-text">Market data sources</strong> — such as
-            publicly available eBay sold listings or similar sources used to
-            estimate values. Those services have their own privacy policies.
+            publicly available sold listings or marketplace price information
+            used for research helpers. Those services have their own privacy
+            policies.
           </li>
           <li>
             <strong className="text-text">Email &amp; communication tools</strong>{" "}
-            — to handle beta invites and support messages.
+            — to handle early access and support messages.
           </li>
         </ul>
         <p>
           These providers process data only as needed to provide services to us
           and are expected to protect it appropriately. We do not control
-          third-party websites or marketplaces you open from the app.
+          third-party websites, marketplaces, or social profiles you open from
+          the app.
         </p>
       </section>
 
       <section className="space-y-3">
         <h2 className="text-lg font-semibold text-text">
-          6. Data retention &amp; security
+          7. Data retention &amp; security
         </h2>
         <p>
           We retain information only as long as needed to provide the service,
@@ -178,11 +219,15 @@ export default function PrivacyPage() {
 
       <section className="space-y-3">
         <h2 className="text-lg font-semibold text-text">
-          7. Sharing of information
+          8. Sharing of information
         </h2>
         <p>We may share information:</p>
         <ul className="list-disc space-y-2 pl-5">
           <li>With service providers who help us operate Snap Collectibles.</li>
+          <li>
+            With other collectors when you participate in trades, post offers,
+            send chat messages, or share optional contact helpers you provide.
+          </li>
           <li>
             When you choose to export or share collection data yourself.
           </li>
@@ -199,7 +244,7 @@ export default function PrivacyPage() {
 
       <section className="space-y-3">
         <h2 className="text-lg font-semibold text-text">
-          8. Children&apos;s privacy
+          9. Children&apos;s privacy
         </h2>
         <p>
           Snap Collectibles is not directed to children under 13 (or the minimum
@@ -212,13 +257,13 @@ export default function PrivacyPage() {
 
       <section className="space-y-3">
         <h2 className="text-lg font-semibold text-text">
-          9. Your choices &amp; rights
+          10. Your choices &amp; rights
         </h2>
         <p>
           Depending on your location, you may have rights to access, correct,
           delete, or export personal data, or to object to or restrict certain
-          processing. You can manage camera and photo permissions in your device
-          settings. To request access or deletion of your data, email{" "}
+          processing. You can manage camera, photo, and account permissions in
+          your device settings. To request access or deletion of your data, email{" "}
           <a
             href={`mailto:${CONTACT_EMAIL}`}
             className="text-purple-bright underline-offset-2 hover:underline"
@@ -231,7 +276,7 @@ export default function PrivacyPage() {
 
       <section className="space-y-3">
         <h2 className="text-lg font-semibold text-text">
-          10. International users
+          11. International users
         </h2>
         <p>
           If you use Snap Collectibles from outside the country where our
@@ -244,7 +289,7 @@ export default function PrivacyPage() {
 
       <section className="space-y-3">
         <h2 className="text-lg font-semibold text-text">
-          11. Changes to this policy
+          12. Changes to this policy
         </h2>
         <p>
           We may update this Privacy Policy from time to time. We will post the
@@ -256,7 +301,7 @@ export default function PrivacyPage() {
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-lg font-semibold text-text">12. Contact us</h2>
+        <h2 className="text-lg font-semibold text-text">13. Contact us</h2>
         <p>
           Questions about this Privacy Policy or our data practices:
         </p>

@@ -36,7 +36,7 @@ export default function AppStoreButton({
       </svg>
       <span className="flex flex-col items-start leading-tight">
         <span className="text-[10px] font-normal opacity-70 -mb-0.5">
-          {disabled ? "Coming soon on the" : "Download on the"}
+          {disabled ? "Coming to the" : "Download on the"}
         </span>
         <span className={size === "lg" ? "text-base" : "text-sm"}>
           App Store
@@ -55,7 +55,7 @@ export default function AppStoreButton({
           ${sizeClasses[size]}
           ${className}
         `}
-        title="Not yet available on the App Store — join the beta instead"
+        title="Coming to the App Store — request early access instead"
         aria-disabled="true"
       >
         {content}
