@@ -67,7 +67,7 @@ export default function FinalCTA() {
                 <strong className="text-text">platform</strong>
               </li>
               <li>
-                Tell us a bit about what you collect (Funko, figures, etc.)
+                Tell us a bit about what you collect (figures, cards, sneakers, etc.)
               </li>
             </ol>
             <p className="mt-3 text-xs text-text-dim">

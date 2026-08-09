@@ -40,9 +40,14 @@ const faqs: FAQItem[] = [
       "Trades are peer-to-peer between collectors. You can post offers, pick an item from your inventory so less typing is needed, browse the trade feed, open trade detail, and chat in-app. You can also set contact helpers (username / Facebook) so other collectors know how to reach you. Snap Collectibles does not insure trades or guarantee outcomes between users.",
   },
   {
+    question: "What kinds of collectibles does it support?",
+    answer:
+      "Snap Collectibles is category-based, not tied to one brand. On Scan you choose a category (figures, cards, stickers, comics, sneakers, video games, and more) so identification matches what you’re holding. In Collection you can filter by category across list, grid, and My Shelf views.",
+  },
+  {
     question: "What can I do with my collection in the app?",
     answer:
-      "Maintain personal inventory in list and grid views, display pieces on My Shelf (photo-only), keep a wishlist, and track selling / sold status. Swipe left on collection items to delete; swipe right to start a trade with that item pre-filled.",
+      "Maintain personal inventory in list and grid views, filter by category, display pieces on My Shelf (photo-only), keep a wishlist, and track selling / sold status. Swipe left on collection items to delete; swipe right to start a trade with that item pre-filled.",
   },
   {
     question: "Is my collection backed up in the cloud?",

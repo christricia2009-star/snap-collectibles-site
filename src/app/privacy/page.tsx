@@ -106,10 +106,10 @@ export default function PrivacyPage() {
         <p>We use information to:</p>
         <ul className="list-disc space-y-2 pl-5">
           <li>
-            Provide core features: camera scanning with category selection,
-            collection inventory (list and grid), My Shelf, wishlist, selling
-            and sold tracking, sold comps and marketplace price helpers, trades
-            (offers, feed, detail, chat), and related tools.
+            Provide core features: category-first camera scanning, collection
+            inventory (list, grid, and category filters), My Shelf, wishlist,
+            selling and sold tracking, sold comps and marketplace price helpers,
+            trades (offers, feed, detail, chat), and related tools.
           </li>
           <li>
             Show pricing research helpers using publicly available market data

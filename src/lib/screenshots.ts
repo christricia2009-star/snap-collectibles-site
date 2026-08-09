@@ -39,8 +39,8 @@ const iosScreenshots: ScreenshotMap = {
   },
   scan: {
     src: "/screenshots/Scan.png",
-    label: "Multi-item scan",
-    alt: "Snap Collectibles iOS multi-item photo and barcode scan screen",
+    label: "Category scan",
+    alt: "Snap Collectibles iOS category selection and camera scan screen",
   },
   marketValue: {
     src: "/screenshots/MarketRates.png",
@@ -86,8 +86,8 @@ const androidScreenshots: ScreenshotMap = {
   },
   scan: {
     src: "/screenshots/android/Scan.png",
-    label: "Multi-item scan",
-    alt: "Snap Collectibles Android multi-item photo and barcode scan screen",
+    label: "Category scan",
+    alt: "Snap Collectibles Android category selection and camera scan screen",
   },
   marketValue: {
     src: "/screenshots/android/CollectionStats.png",

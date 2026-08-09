@@ -17,8 +17,8 @@ type Row = {
 const rows: Row[] = [
   {
     capability: "Identify items",
-    typical: "Manual typing or barcode only",
-    snap: "Camera scan with category selection",
+    typical: "Manual typing, barcode only, or one brand focus",
+    snap: "Category-first camera scan across mixed collectible types",
   },
   {
     capability: "Pricing help",
@@ -28,7 +28,7 @@ const rows: Row[] = [
   {
     capability: "Collection views",
     typical: "A single list",
-    snap: "List, grid, and My Shelf (photo-only display)",
+    snap: "List, grid, My Shelf, plus category filters",
   },
   {
     capability: "Wishlist & selling",

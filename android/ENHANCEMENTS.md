@@ -1,6 +1,6 @@
 # Snap Collectibles Android — Enhancements (v1.1)
 
-This release turns Snap Collectibles into a **power-user portfolio tool** for Funko and multi-category collectibles — beyond barcode-only trackers and estimate-only AI scanners.
+This release turns Snap Collectibles into a **power-user portfolio tool** for multi-category collectibles — beyond barcode-only trackers and estimate-only AI scanners.
 
 ## What was added
 
@@ -30,7 +30,7 @@ Computed helpers (not columns):
 - Single-item AI identify + barcode scan (unchanged flow).
 - **Bulk Shelf Scan** (new):
   1. Open **Bulk Scan** (dashboard icon on Home top bar).
-  2. Optional category hint (e.g. Funko).
+  2. Optional category hint (figures, cards, etc.).
   3. Take or pick one shelf/group photo (downscaled before AI).
   4. Review multi-select results; choose Owned / Selling / Wishlist.
   5. Add selected in one batch; duplicates by name skipped/flagged.

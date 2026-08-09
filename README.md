@@ -57,7 +57,7 @@ src/
 
 The app is **coming to the App Store**; private testing may be available. Primary CTAs email `Testing@snapcollectibles.com` (prefilled request). The App Store badge is shown disabled as “Coming to the App Store.”
 
-Marketing copy is aligned to current product features: camera scan + categories, sold comps / price helpers, inventory (list + grid), My Shelf, wishlist, selling/sold, Sign in with Apple, trades (offers, inventory pick, feed, chat, contact helpers), swipe actions, cloud backup while signed in, and More (stats / trade history). Do not invent pricing or guaranteed valuations.
+Marketing copy is brand-neutral and category-first (aligned to the latest Collection Vault / Snap Collectibles build): pick a category then scan, sold comps / price helpers, inventory with list + grid + category filters, My Shelf, wishlist, selling/sold, Sign in with Apple, trades (offers, inventory pick, feed, chat, contact helpers), swipe actions, cloud backup while signed in, and More (stats / trade history). Avoid single-brand positioning (e.g. Funko-only). Do not invent pricing or guaranteed valuations.
 
 ## Build
 

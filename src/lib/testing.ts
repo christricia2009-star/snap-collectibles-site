@@ -23,7 +23,7 @@ export function getTestingMailto(platform: Platform = "ios"): string {
     "Name: ",
     "Email: ",
     `Platform: ${platformLabel}`,
-    "Collecting interests (e.g. Funko, sports cards, sneakers): ",
+    "Collecting interests (e.g. figures, sports cards, sneakers, games): ",
     "",
     "Thanks!",
   ].join("\n");

@@ -8,8 +8,8 @@ import { motion } from "motion/react";
 
 const highlights = [
   {
-    label: "Camera scan",
-    detail: "Category selection",
+    label: "Category scan",
+    detail: "Pick type, then camera",
   },
   {
     label: "Price research",
@@ -17,7 +17,7 @@ const highlights = [
   },
   {
     label: "Collection views",
-    detail: "List, grid & My Shelf",
+    detail: "List, grid, shelf & filters",
   },
   {
     label: "Trades",

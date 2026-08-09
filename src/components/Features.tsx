@@ -19,9 +19,9 @@ type Feature = {
 
 const features: Feature[] = [
   {
-    title: "Camera scan with categories",
+    title: "Category-first camera scan",
     description:
-      "Point the camera at a piece, pick a category, and identify it faster. Built with Funko in mind — ready for multi-category collections.",
+      "Choose what you’re scanning — figures, cards, stickers, comics, sneakers, games, and more — then point the camera. Category selection guides identification so mixed collections work without brand lock-in.",
     accent: "from-pink/20 to-pink/5 text-pink-hot",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className="h-6 w-6">
@@ -42,9 +42,9 @@ const features: Feature[] = [
     ),
   },
   {
-    title: "Collection inventory",
+    title: "Collection inventory by category",
     description:
-      "Keep everything in one place with list and grid views. Swipe left to delete, swipe right to start a trade with the item pre-filled — less typing, faster actions.",
+      "Keep everything in one place with list, grid, and My Shelf views. Filter by category, swipe left to delete, swipe right to start a trade with the item pre-filled — less typing, faster actions.",
     accent: "from-gold/20 to-gold/5 text-gold",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className="h-6 w-6">
@@ -110,7 +110,7 @@ export default function Features() {
         <SectionHeading
           eyebrow="Features"
           title="Built for how collectors actually collect"
-          subtitle="Scan and save pieces, research sold comps, show your shelf, and trade with peers — without overpromising on values or deals."
+          subtitle="Category-first scan and inventory, sold comps research, shelf display, and peer trades — without overpromising on values or deals."
         />
 
         <motion.div

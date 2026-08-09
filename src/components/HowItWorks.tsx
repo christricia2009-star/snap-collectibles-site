@@ -12,7 +12,7 @@ const steps = [
     step: "01",
     title: "Scan",
     description:
-      "Open the camera, choose a category, and identify collectibles without endless manual entry.",
+      "Open Scan, pick a category for what you’re looking at, then capture a photo — identification follows the category you chose.",
     color: "text-purple-bright",
     ring: "ring-purple/30",
   },
@@ -20,7 +20,7 @@ const steps = [
     step: "02",
     title: "Save",
     description:
-      "Add pieces to your collection inventory. Browse list or grid, build a wishlist, and show them on My Shelf.",
+      "Add pieces to your collection. Browse list, grid, or My Shelf, filter by category, and keep a wishlist as you grow.",
     color: "text-pink-hot",
     ring: "ring-pink/30",
   },
@@ -49,7 +49,7 @@ export default function HowItWorks() {
         <SectionHeading
           eyebrow="How it works"
           title="Scan → Save → Value → Trade"
-          subtitle="A simple loop for collectors: identify pieces, keep them organized, research prices, and trade when you’re ready."
+          subtitle="A simple loop for collectors: choose a category, identify pieces, keep them organized, research prices, and trade when you’re ready."
         />
 
         <div className="relative mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">

@@ -89,9 +89,9 @@ export default function Hero() {
                 {platformLabel}
               </motion.span>
             </AnimatePresence>{" "}
-            app for collectors — especially Funko, built for multi-category
-            shelves. Identify pieces with the camera, keep inventory and a
-            photo shelf, research sold comps, manage wishlist and sells, and
+            app for collectors — built around categories, not a single brand.
+            Pick a category, identify pieces with the camera, keep inventory and
+            a photo shelf, research sold comps, manage wishlist and sells, and
             trade with other collectors in-app.
           </motion.p>
 
@@ -116,7 +116,7 @@ export default function Hero() {
               with your <strong className="text-text">name</strong>,{" "}
               <strong className="text-text">email</strong>,{" "}
               <strong className="text-text">platform</strong>, and what you
-              collect (e.g. Funko, cards, figures).
+              collect (e.g. figures, cards, sneakers, games).
             </p>
           </motion.div>
 

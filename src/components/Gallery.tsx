@@ -25,7 +25,7 @@ export default function Gallery() {
         <SectionHeading
           eyebrow="Product"
           title="A closer look at the experience"
-          subtitle="Real screens from Snap Collectibles — camera scan, collection inventory, wishlist, selling, and more. Switch platforms to preview available builds."
+          subtitle="Real screens from Snap Collectibles — category-first scan, collection inventory, wishlist, selling, and more. Switch platforms to preview available builds."
         />
 
         <div className="mt-8 flex justify-center">

@@ -70,8 +70,8 @@ export default function SupportPage() {
             relevant)
           </li>
           <li>
-            <strong className="text-text">What you collect</strong> (e.g. Funko,
-            figures, cards)
+            <strong className="text-text">What you collect</strong> (e.g.
+            figures, cards, sneakers, games)
           </li>
         </ul>
         <p>
