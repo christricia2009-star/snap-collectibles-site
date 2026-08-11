@@ -4,24 +4,25 @@ import { motion } from "motion/react";
 
 /**
  * Capability highlights band — no invented metrics or pricing claims.
+ * Reflects B15 / v2.3 product pillars.
  */
 
 const highlights = [
   {
-    label: "Category scan",
-    detail: "Pick type, then camera",
+    label: "Scan review",
+    detail: "Rarity · ranges · deal score",
   },
   {
-    label: "Price research",
-    detail: "Sold comps & helpers",
+    label: "Portfolio",
+    detail: "Value · P/L · movers · health",
   },
   {
-    label: "Collection views",
-    detail: "List, grid, shelf & filters",
+    label: "Hunter Mode",
+    detail: "Shelf price → buy / pass",
   },
   {
-    label: "Trades",
-    detail: "Offers, feed & chat",
+    label: "Tools hub",
+    detail: "Search · goals · export · trade",
   },
 ];
 
@@ -64,8 +65,8 @@ export default function Stats() {
         </motion.div>
 
         <p className="mt-8 text-center text-[11px] text-text-dim">
-          Snap Collectibles · Coming to the App Store · Sign in with Apple ·
-          Cloud backup when signed in
+          Snap Collectibles · Scan · Catalog · Trade · Coming to the App Store ·
+          Market values are estimates from comps — not appraisals
         </p>
       </div>
     </section>

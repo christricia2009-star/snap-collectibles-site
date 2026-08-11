@@ -37,12 +37,12 @@ export default function FinalCTA() {
           </p>
           <h2 className="text-3xl font-bold tracking-tight text-text sm:text-4xl md:text-5xl">
             Ready to{" "}
-            <span className="text-gradient">scan, save, and trade</span>?
+            <span className="text-gradient">run your vault</span>?
           </h2>
           <p className="mx-auto mt-4 max-w-lg text-base text-text-muted sm:text-lg">
-            Snap Collectibles helps you identify collectibles, keep inventory and
-            a photo shelf, research sold comps, and trade with peers. Request
-            early access while we prepare for the App Store.
+            Snap with deal scores, run portfolio health, hunt at the pegs, and
+            trade with peers — all in one app. Request early access while we
+            prepare for the App Store.
           </p>
 
           <div className="mt-6 flex justify-center">

@@ -34,8 +34,8 @@ type ScreenshotMap = Partial<Record<ScreenshotKey, Screenshot>> &
 const iosScreenshots: ScreenshotMap = {
   collection: {
     src: "/screenshots/collection.png",
-    label: "Collection overview",
-    alt: "Snap Collectibles iOS collection overview screen",
+    label: "Collection & vault",
+    alt: "Snap Collectibles iOS collection overview and vault screen",
   },
   scan: {
     src: "/screenshots/Scan.png",
@@ -44,8 +44,8 @@ const iosScreenshots: ScreenshotMap = {
   },
   marketValue: {
     src: "/screenshots/MarketRates.png",
-    label: "Market value",
-    alt: "Snap Collectibles iOS market value and eBay comps screen",
+    label: "Market & portfolio",
+    alt: "Snap Collectibles iOS market value, sold comps, and portfolio research screen",
   },
   wishlist: {
     src: "/screenshots/Wishlist.png",

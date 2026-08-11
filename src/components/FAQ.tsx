@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "motion/react";
 import SectionHeading from "./SectionHeading";
 
 /**
- * FAQ accordion — accurate, privacy-minded, no overclaims.
+ * FAQ accordion — accurate to B15, privacy-minded, no overclaims.
  */
 
 type FAQItem = {
@@ -22,42 +22,52 @@ const faqs: FAQItem[] = [
   {
     question: "Is this the same app as Collection Vault?",
     answer:
-      "Yes. The same app you’ve seen in TestFlight or earlier testing is now publicly named Snap Collectibles. Features and branding on this site refer to that product.",
+      "Yes. The same app you’ve seen in TestFlight or earlier testing is now publicly named Snap Collectibles. Features and branding on this site refer to that product (currently around the v2.3 build).",
   },
   {
-    question: "Do I need Sign in with Apple?",
+    question: "How is Snap Collectibles different from ToyWorth or other scan apps?",
     answer:
-      "Sign in with Apple is how you sign in for account features. Cloud backup and restore of your collection require being signed in. You can still explore local collection tools depending on the screen — backup needs a signed-in account.",
+      "ToyWorth-class apps excel at snap → estimate → save. Snap Collectibles does that loop, then runs a full vault: multi-signal scan review with sold comps and coach Q&A, Hunter Mode for shelf-price buy/pass, hunt sessions and walk-away ledger, portfolio P/L and movers, Check My Collection so you don’t rebuy, sell rails with fees and multi-marketplace drafts, and peer trades with chat and fair equity. Scan apps answer “what is this?” — Snap answers buy, hold, sell, trade, and “do I already own this?” Market values remain research estimates, not appraisals.",
+  },
+  {
+    question: "What’s new compared with earlier betas?",
+    answer:
+      "Recent builds add a portfolio-first Home, scan review with rarity and deal scores, Hunter Mode for in-store buy/pass, hunt sessions and walk-away ledger, a full Tools hub (search, smart collections, goals, exports, and more), pricing confidence and fee-aware flip math, Vault DNA, fair trade equity, Collector Academy guides, quieter market refresh, mark-as-sold with fees and P/L, and portfolio widget snapshots.",
+  },
+  {
+    question: "What is Hunter Mode?",
+    answer:
+      "Hunter Mode is an in-store deal radar. You set a shelf price, snap or scan the item, and get deal-score style buy/pass context against sold comps — meant for aisle decisions. Results are research helpers, not a guarantee you’ll profit.",
   },
   {
     question: "Where do prices and “values” come from?",
     answer:
-      "Snap Collectibles offers sold comps and marketplace-style price helpers to support your research — for example eBay-style sold comps and other marketplace price info when available. These are research tools, not formal appraisals, and we do not guarantee values or sale prices.",
+      "Snap Collectibles offers sold comps, marketplace-style helpers, ranges with confidence context, and optional forecasts. Quiet refresh can update stale items when you open the app. These are research tools, not formal appraisals, and we do not guarantee values or sale prices.",
+  },
+  {
+    question: "How does portfolio value work?",
+    answer:
+      "Home shows portfolio low / average / high ranges from comps when available, unrealized P/L versus what you paid, short-window movers, health-style signals, grails, and goals. It’s a living dashboard for your vault — still estimates, not insurance appraisals (there is a separate insurance inventory export for records).",
   },
   {
     question: "How do trades work?",
     answer:
-      "Trades are peer-to-peer between collectors. You can post offers, pick an item from your inventory so less typing is needed, browse the trade feed, open trade detail, and chat in-app. You can also set contact helpers (username / Facebook) so other collectors know how to reach you. Snap Collectibles does not insure trades or guarantee outcomes between users.",
+      "Trades are peer-to-peer between collectors. You can post offers, pick an item from inventory, browse the trade feed, open trade detail, chat in-app, surface trade matches, and use fair equity / checklist helpers. Contact helpers (username / Facebook) are optional. Snap Collectibles does not insure trades or guarantee outcomes.",
   },
   {
     question: "What kinds of collectibles does it support?",
     answer:
-      "Snap Collectibles is category-based, not tied to one brand. On Scan you choose a category (figures, cards, stickers, comics, sneakers, video games, and more) so identification matches what you’re holding. In Collection you can filter by category across list, grid, and My Shelf views.",
+      "Category-based, not tied to one brand — including figures, Loungefly, Pokémon, sports cards, comics, LEGO, Hot Wheels, video games, shoes, and more. Scan chooses a category so identification matches what you’re holding; Collection filters by category across list, grid, and My Shelf.",
   },
   {
-    question: "What can I do with my collection in the app?",
+    question: "Do I need Sign in with Apple?",
     answer:
-      "Maintain personal inventory in list and grid views, filter by category, display pieces on My Shelf (photo-only), keep a wishlist, and track selling / sold status. Swipe left on collection items to delete; swipe right to start a trade with that item pre-filled.",
+      "Sign in with Apple is how you sign in for account features. Cloud backup and restore, trading, chat, and events require being signed in. You can still explore local collection tools offline; backup and social features need a signed-in account.",
   },
   {
     question: "Is my collection backed up in the cloud?",
     answer:
-      "Yes — when you’re signed in, you can back up and restore your collection to the cloud. Sign-in is required for cloud backup. Camera and photo access is used for identification and collection photos you choose to add.",
-  },
-  {
-    question: "How does Snap Collectibles use my camera and photos?",
-    answer:
-      "Camera and photos are used to help identify collectibles and to support your collection and shelf views. Trades use Sign in with Apple plus any optional contact info you choose to provide. See our Privacy Policy for full details.",
+      "Yes — when you’re signed in, you can back up and restore your collection to iCloud. Auto-backup can run after local changes. You can also export JSON/CSV and import data. Home surfaces backup status so you’re less likely to lose a beta vault.",
   },
   {
     question: "Is early access free?",
@@ -127,7 +137,7 @@ export default function FAQ() {
         <SectionHeading
           eyebrow="FAQ"
           title="Questions, answered"
-          subtitle="Straight answers about scanning, pricing research, trades, and backup. Still stuck? Email Testing@snapcollectibles.com."
+          subtitle="Straight answers about scan review, portfolio, Hunter Mode, pricing research, trades, and backup. Still stuck? Email Testing@snapcollectibles.com."
         />
 
         <motion.div

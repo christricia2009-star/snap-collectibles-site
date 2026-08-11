@@ -4,39 +4,40 @@ import { motion } from "motion/react";
 import SectionHeading from "./SectionHeading";
 
 /**
- * Four-step “How it works” — Scan → Save → Value → Trade.
+ * Four-step “How it works” — Snap → Value → Vault → Hunt/Trade.
+ * Aligned to B15 onboarding + product loop.
  */
 
 const steps = [
   {
     step: "01",
-    title: "Scan",
+    title: "Snap",
     description:
-      "Open Scan, pick a category for what you’re looking at, then capture a photo — identification follows the category you chose.",
+      "Open Scan, pick a category, capture a photo or barcode. Multi-item snaps and duplicate warnings keep the vault clean from the first add.",
     color: "text-purple-bright",
     ring: "ring-purple/30",
   },
   {
     step: "02",
-    title: "Save",
+    title: "Review value",
     description:
-      "Add pieces to your collection. Browse list, grid, or My Shelf, filter by category, and keep a wishlist as you grow.",
+      "Before you save: rarity signals, packaging cues, sold ranges, and a deal score. Research helpers — not a formal appraisal.",
     color: "text-pink-hot",
     ring: "ring-pink/30",
   },
   {
     step: "03",
-    title: "Value",
+    title: "Run the vault",
     description:
-      "Use sold comps and marketplace price helpers as research tools. Check what the market has been paying — not a guaranteed appraisal.",
+      "Portfolio home tracks ranges, P/L, grails, and goals. Organize with list, grid, My Shelf, smart collections, and Tools hub exports.",
     color: "text-gold",
     ring: "ring-gold/30",
   },
   {
     step: "04",
-    title: "Trade",
+    title: "Hunt & trade",
     description:
-      "Post offers, pick items from inventory, follow the trade feed, and chat in-app. Peer-to-peer between collectors.",
+      "Hunter Mode and hunt sessions for the aisle; sell with fees & P/L; trade with matches, chat, and fair equity checks — peer-to-peer.",
     color: "text-purple-bright",
     ring: "ring-purple/30",
   },
@@ -48,8 +49,8 @@ export default function HowItWorks() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           eyebrow="How it works"
-          title="Scan → Save → Value → Trade"
-          subtitle="A simple loop for collectors: choose a category, identify pieces, keep them organized, research prices, and trade when you’re ready."
+          title="Snap → Review → Vault → Hunt"
+          subtitle="A simple loop for collectors: identify with context, run portfolio health, decide at the pegs, and trade when you’re ready."
         />
 
         <div className="relative mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">

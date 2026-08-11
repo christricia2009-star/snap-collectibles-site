@@ -10,8 +10,9 @@ import { getHeroScreenshot } from "@/lib/screenshots";
 import { TESTING_EMAIL } from "@/lib/testing";
 
 /**
- * Hero section — Scan / track / value / trade framing,
+ * Hero section — vault OS framing (scan / hunt / value / trade),
  * soft App Store CTA, TestFlight-style beta request.
+ * Aligned to B15 / v2.3 product.
  */
 export default function Hero() {
   const { platform, label: platformLabel } = usePlatform();
@@ -46,7 +47,7 @@ export default function Hero() {
           >
             <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3.5 py-1.5 text-xs font-medium text-gold-soft backdrop-blur">
               <span className="h-1.5 w-1.5 rounded-full bg-gold animate-pulse" />
-              iOS · Coming to the App Store
+              Scan · Catalog · Trade · Coming to the App Store
             </span>
           </motion.div>
 
@@ -66,8 +67,8 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
             className="text-4xl font-bold tracking-tight text-text sm:text-5xl lg:text-[3.5rem] lg:leading-[1.1]"
           >
-            Scan, track, value, and{" "}
-            <span className="text-gradient">trade</span> your collectibles
+            Run your vault —{" "}
+            <span className="text-gradient">scan, hunt, value, trade</span>
           </motion.h1>
 
           <motion.p
@@ -89,10 +90,10 @@ export default function Hero() {
                 {platformLabel}
               </motion.span>
             </AnimatePresence>{" "}
-            app for collectors — built around categories, not a single brand.
-            Pick a category, identify pieces with the camera, keep inventory and
-            a photo shelf, research sold comps, manage wishlist and sells, and
-            trade with other collectors in-app.
+            app for serious collectors — not another ToyWorth-style
+            scan-and-forget tool. Snap with category-first ID, review rarity and
+            sold ranges before you save, run a live portfolio with deal scores
+            and Hunter Mode at the pegs, then sell or trade with peers.
           </motion.p>
 
           {/* Soft status callout */}
@@ -136,8 +137,8 @@ export default function Hero() {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="mt-5 text-xs text-text-dim"
           >
-            Sign in with Apple · Cloud backup when signed in · Peer-to-peer
-            trades
+            Portfolio home · Hunter Mode · Deal scores · Tools hub · Cloud
+            backup when signed in
           </motion.p>
         </div>
 

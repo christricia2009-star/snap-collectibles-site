@@ -1,14 +1,15 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { motion } from "motion/react";
 
 type SectionHeadingProps = {
   /** Small uppercase label above the title */
   eyebrow?: string;
   /** Main heading */
-  title: string;
+  title: ReactNode;
   /** Optional supporting copy */
-  subtitle?: string;
+  subtitle?: ReactNode;
   /** Center or left align */
   align?: "center" | "left";
   className?: string;
@@ -32,7 +33,7 @@ export default function SectionHeading({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-      className={`max-w-2xl ${alignClass} ${className}`}
+      className={`max-w-3xl ${alignClass} ${className}`}
     >
       {eyebrow && (
         <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-purple-bright">

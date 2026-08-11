@@ -67,7 +67,7 @@ export default function Header() {
             href="#why-us"
             className="hidden text-sm font-medium text-text-muted transition-colors hover:text-text lg:inline"
           >
-            Why us
+            Why better
           </a>
           <a
             href="#gallery"

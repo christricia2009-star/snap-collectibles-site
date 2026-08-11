@@ -9,9 +9,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Snap Collectibles — Scan, Track, Value & Trade Collectibles",
+  title: "Snap Collectibles — Scan · Catalog · Trade Collectibles",
   description:
-    "The iOS app for collectors. Category-first camera scan, sold comps and marketplace price helpers, personal inventory with category filters and My Shelf, wishlist, selling tools, peer-to-peer trades with in-app chat, and cloud backup when signed in with Apple. Coming to the App Store.",
+    "The collector vault OS. Category-first scan with rarity and deal scores, portfolio value and P/L, Hunter Mode for in-store buy/pass, Tools hub, sold comps with confidence, selling with fees, peer trades with fair equity, and iCloud backup when signed in with Apple. Coming to the App Store.",
   keywords: [
     "collectibles",
     "collection app",
@@ -20,6 +20,9 @@ export const metadata: Metadata = {
     "camera scan",
     "sold comps",
     "eBay comps",
+    "portfolio tracker",
+    "hunter mode",
+    "deal score",
     "collection inventory",
     "wishlist",
     "trade collectibles",
@@ -29,18 +32,18 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Snap Collectibles", url: "https://snapcollectibles.com" }],
   openGraph: {
-    title: "Snap Collectibles — Scan, Track, Value & Trade",
+    title: "Snap Collectibles — Scan · Catalog · Trade",
     description:
-      "Pick a category, identify collectibles with the camera, track inventory and shelf, research sold comps, and trade with other collectors — all in one iOS app.",
+      "Scan with deal scores, run portfolio health, hunt in-store with Hunter Mode, and trade with other collectors — all in one app.",
     url: "https://snapcollectibles.com",
     siteName: "Snap Collectibles",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Snap Collectibles — Scan, Track, Value & Trade",
+    title: "Snap Collectibles — Scan · Catalog · Trade",
     description:
-      "Pick a category, identify collectibles with the camera, track inventory and shelf, research sold comps, and trade with other collectors — all in one iOS app.",
+      "Scan with deal scores, run portfolio health, hunt in-store with Hunter Mode, and trade with other collectors — all in one app.",
   },
   metadataBase: new URL("https://snapcollectibles.com"),
   icons: {
