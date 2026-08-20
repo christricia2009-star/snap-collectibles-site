@@ -16,6 +16,7 @@ export default function SupportPage() {
     <LegalPageShell
       title="Support & Contact"
       description="We’re here to help with early access, app questions, and feedback for Snap Collectibles."
+      current="support"
     >
       <section className="space-y-3">
         <h2 className="text-lg font-semibold text-text">Contact email</h2>
@@ -48,32 +49,18 @@ export default function SupportPage() {
           Request early access
         </h2>
         <p>
-          Snap Collectibles is coming to the App Store. Private testing may be
-          available before public release. To request access, email{" "}
-          <a
-            href={`mailto:${TESTING_EMAIL}`}
-            className="text-purple-bright underline-offset-2 hover:underline"
+          Snap Collectibles is in closed beta on iOS and Android. Use the{" "}
+          <Link
+            href="/#download"
+            className="font-medium text-purple-bright underline-offset-2 hover:underline"
           >
-            {TESTING_EMAIL}
-          </a>{" "}
-          and include:
+            request beta form
+          </Link>{" "}
+          on the home page. We collect App name, phone OS, and email. Android
+          testers must copy the Play internal-test URL shown after submit —
+          Google does not auto-email tester invites. Allow a few hours after we
+          add your email to the tester list.
         </p>
-        <ul className="list-disc space-y-2 pl-5">
-          <li>
-            <strong className="text-text">Name</strong>
-          </li>
-          <li>
-            <strong className="text-text">Email</strong>
-          </li>
-          <li>
-            <strong className="text-text">Platform</strong> (iOS or Android, if
-            relevant)
-          </li>
-          <li>
-            <strong className="text-text">What you collect</strong> (e.g.
-            figures, cards, sneakers, games)
-          </li>
-        </ul>
         <p>
           <Link
             href="/#download"
@@ -87,7 +74,7 @@ export default function SupportPage() {
       <section className="space-y-3">
         <h2 className="text-lg font-semibold text-text">Common topics</h2>
         <ul className="list-disc space-y-2 pl-5">
-          <li>Early access / TestFlight invite status</li>
+          <li>Early access / TestFlight or Play internal-test status</li>
           <li>Camera scan, categories, and photo permissions</li>
           <li>Collection, My Shelf, wishlist, and selling / sold tracking</li>
           <li>Sold comps and price helpers (research tools, not appraisals)</li>

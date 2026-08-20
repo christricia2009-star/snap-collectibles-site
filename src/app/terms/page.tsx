@@ -18,6 +18,7 @@ export default function TermsPage() {
       title="Terms of Use & Copyright"
       description="Simple terms covering use of the Snap Collectibles website, apps, and related early access services."
       lastUpdated="August 7, 2026"
+      current="terms"
     >
       <section className="space-y-3">
         <h2 className="text-lg font-semibold text-text">1. Acceptance</h2>

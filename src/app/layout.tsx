@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { IBM_Plex_Mono, Inter } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -8,10 +8,17 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
+const plex = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  display: "swap",
+  variable: "--font-plex",
+});
+
 export const metadata: Metadata = {
-  title: "Snap Collectibles — Scan · Catalog · Trade Collectibles",
+  title: "Snap Collectibles — Scan · Catalog · Trade",
   description:
-    "The collector vault OS. Category-first scan with rarity and deal scores, portfolio value and P/L, Hunter Mode for in-store buy/pass, Tools hub, sold comps with confidence, selling with fees, peer trades with fair equity, and iCloud backup when signed in with Apple. Coming to the App Store.",
+    "The collector vault OS. Category-first scan with rarity and deal scores, portfolio value and P/L, Hunter Mode for in-store buy/pass, Tools hub, sold comps, selling with fees, and peer trades. iOS and Android beta.",
   keywords: [
     "collectibles",
     "collection app",
@@ -28,13 +35,14 @@ export const metadata: Metadata = {
     "trade collectibles",
     "Sign in with Apple",
     "iOS",
+    "Android",
     "TestFlight",
   ],
   authors: [{ name: "Snap Collectibles", url: "https://snapcollectibles.com" }],
   openGraph: {
     title: "Snap Collectibles — Scan · Catalog · Trade",
     description:
-      "Scan with deal scores, run portfolio health, hunt in-store with Hunter Mode, and trade with other collectors — all in one app.",
+      "Scan with deal scores, run portfolio health, hunt in-store with Hunter Mode, and trade with other collectors — all in one app. iOS and Android beta.",
     url: "https://snapcollectibles.com",
     siteName: "Snap Collectibles",
     type: "website",
@@ -43,7 +51,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Snap Collectibles — Scan · Catalog · Trade",
     description:
-      "Scan with deal scores, run portfolio health, hunt in-store with Hunter Mode, and trade with other collectors — all in one app.",
+      "Scan with deal scores, run portfolio health, hunt in-store with Hunter Mode, and trade with other collectors. iOS and Android beta.",
   },
   metadataBase: new URL("https://snapcollectibles.com"),
   icons: {
@@ -53,7 +61,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a0a0c",
+  themeColor: "#050505",
   width: "device-width",
   initialScale: 1,
 };
@@ -63,9 +71,29 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: "Snap Collectibles",
+    applicationCategory: "LifestyleApplication",
+    operatingSystem: "iOS, Android",
+    description:
+      "Scan collectibles with deal scores, run portfolio health, hunt in-store with Hunter Mode, and trade with other collectors. Offline-capable vault with iCloud backup when signed in.",
+    offers: {
+      "@type": "Offer",
+      availability: "https://schema.org/PreOrder",
+      price: "0",
+      priceCurrency: "USD",
+    },
+  };
+
   return (
-    <html lang="en" className={inter.variable}>
-      <body className="min-h-screen bg-bg font-sans text-text antialiased">
+    <html lang="en" className={`${inter.variable} ${plex.variable}`}>
+      <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         {children}
       </body>
     </html>

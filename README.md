@@ -1,12 +1,12 @@
 # Snap Collectibles — Landing Page
 
-Modern, high-converting single-page marketing site for the **Snap Collectibles** iOS app (public name for Collection Vault).
+Marketing site for **Snap Collectibles** (public name for Collection Vault). Layout and design language match BassheadOS: dark bay, display type, device frames, and an on-page beta form.
 
 ## Stack
 
 - **Next.js** (App Router) + TypeScript
 - **Tailwind CSS** v4
-- **Motion** (`motion/react`) for animations
+- BassheadOS design system in `src/app/globals.css`
 
 ## Getting started
 
@@ -44,18 +44,21 @@ src/
 
 | What | Where |
 |------|--------|
-| TestFlight / testing email | `src/lib/testing.ts` |
+| Beta inbox / FormSubmit | `src/lib/testing.ts` (`BETA_INBOX`, `BETA_ENDPOINT`) |
+| Android Play test URL | `src/lib/testing.ts` (`ANDROID_TEST_URL`) |
 | Screenshot paths | `src/lib/screenshots.ts` + `/public/screenshots/` |
-| App Store URL (when live) | `AppStoreButton.tsx` → `APP_STORE_URL` + set `disabled={false}` |
-| Feature copy | `Features.tsx` → `features` array |
+| Feature copy | `Features.tsx`, `ProductSections.tsx` |
 | FAQ content | `FAQ.tsx` → `faqs` array |
-| Stats numbers | `Stats.tsx` → `stats` array |
-| Support email / privacy | `Footer.tsx` |
-| Brand colors | `globals.css` → `@theme` tokens |
+| Support email / privacy | `Footer.tsx`, `/privacy`, `/support` |
+| Brand colors | `globals.css` → `:root` tokens |
 
 ### App status
 
-The app is **coming to the App Store**; private testing may be available. Primary CTAs email `Testing@snapcollectibles.com` (prefilled request). The App Store badge is shown disabled as “Coming to the App Store.”
+iOS and Android are **in closed beta**. The form posts App name (`Snap Collectibles`), phone OS, and email to [FormSubmit](https://formsubmit.co) → **admin@snapcollectibles.com**.
+
+Android submissions show the Play internal-test URL on-screen. Testers must copy/keep it and acknowledge before continuing. The URL is active once the email is added to the tester list — allow up to a few hours. Google does not auto-send tester emails.
+
+The first live submission to a new inbox sends a FormSubmit confirmation. Click it once so later requests land automatically. If the service is blocked, the page falls back to a `mailto:` draft (iOS immediately; Android only after the URL is on-screen).
 
 ### Marketing alignment (B15 / v2.3)
 

@@ -2,91 +2,106 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { motion } from "motion/react";
-import RequestAccessButton from "./RequestAccessButton";
-import PlatformSwitcher from "./PlatformSwitcher";
+import Link from "next/link";
+
+const NAV = [
+  { href: "/#scan", label: "Scan" },
+  { href: "/#vault", label: "Vault" },
+  { href: "/#hunt", label: "Hunt" },
+  { href: "/#trade", label: "Trade" },
+  { href: "/privacy", label: "Privacy" },
+];
+
+type HeaderProps = {
+  current?: "privacy" | "support" | "terms";
+};
 
 /**
- * Sticky site header with app icon, platform switcher, and request-access CTA.
- * Gains a frosted background after the user scrolls.
+ * Sticky site header — BassheadOS chrome: frosted bar, display wordmark, mobile drawer.
  */
-export default function Header() {
+export default function Header({ current }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 16);
+    const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  return (
-    <motion.header
-      initial={{ y: -20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className={`
-        fixed inset-x-0 top-0 z-50 transition-all duration-300
-        ${
-          scrolled
-            ? "border-b border-border/60 bg-bg/80 backdrop-blur-xl shadow-lg shadow-black/20"
-            : "bg-transparent"
-        }
-      `}
-    >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:h-[4.25rem] sm:px-6 lg:px-8">
-        {/* Logo / wordmark — app icon from /public/icon.jpg */}
-        <a
-          href="#top"
-          className="group flex min-w-0 items-center gap-2.5"
-          aria-label="Snap Collectibles home"
-        >
-          <Image
-            src="/icon.jpg"
-            alt="Snap Collectibles"
-            width={36}
-            height={36}
-            className="h-9 w-9 flex-shrink-0 rounded-xl object-cover shadow-md ring-1 ring-white/10 transition-transform duration-300 group-hover:scale-105"
-            priority
-          />
-          <span className="truncate text-[15px] font-bold tracking-tight text-text sm:text-base">
-            Snap{" "}
-            <span className="text-gradient">Collectibles</span>
-          </span>
-        </a>
+  useEffect(() => {
+    document.body.classList.toggle("nav-open", open);
+    return () => document.body.classList.remove("nav-open");
+  }, [open]);
 
-        {/* Nav + platform switcher + CTA */}
-        <nav className="flex items-center gap-2 sm:gap-4" aria-label="Primary">
-          <a
-            href="#features"
-            className="hidden text-sm font-medium text-text-muted transition-colors hover:text-text md:inline"
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, []);
+
+  const close = () => setOpen(false);
+
+  return (
+    <>
+      <a className="skip" href="#main">
+        Skip to content
+      </a>
+
+      <header className={`site-header${scrolled ? " is-scrolled" : ""}`}>
+        <div className="wrap">
+          <Link className="brand" href="/#top" aria-label="Snap Collectibles home">
+            <Image
+              src="/icon.jpg"
+              alt=""
+              width={28}
+              height={28}
+              priority
+            />
+            <span className="brand-name">Snap Collectibles</span>
+          </Link>
+          <nav className="nav" aria-label="Primary">
+            {NAV.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={
+                  current && item.href.endsWith(`/${current}`) ? "page" : undefined
+                }
+              >
+                {item.label}
+              </Link>
+            ))}
+            <Link className="btn btn-primary nav-cta" href="/#download">
+              Request beta
+            </Link>
+          </nav>
+          <button
+            className="nav-toggle"
+            type="button"
+            aria-expanded={open}
+            aria-controls="mobile-nav"
+            aria-label={open ? "Close menu" : "Open menu"}
+            onClick={() => setOpen((v) => !v)}
           >
-            Features
-          </a>
-          <a
-            href="#why-us"
-            className="hidden text-sm font-medium text-text-muted transition-colors hover:text-text lg:inline"
-          >
-            Why better
-          </a>
-          <a
-            href="#gallery"
-            className="hidden text-sm font-medium text-text-muted transition-colors hover:text-text xl:inline"
-          >
-            Screens
-          </a>
-          <a
-            href="#faq"
-            className="hidden text-sm font-medium text-text-muted transition-colors hover:text-text md:inline"
-          >
-            FAQ
-          </a>
-          <div className="hidden sm:block">
-            <PlatformSwitcher size="sm" />
-          </div>
-          <RequestAccessButton size="sm" label="Request Access" />
-        </nav>
-      </div>
-    </motion.header>
+            <span className="bars" aria-hidden="true" />
+          </button>
+        </div>
+      </header>
+
+      <nav className="mobile-nav" id="mobile-nav" aria-label="Mobile">
+        {NAV.map((item) => (
+          <Link key={item.href} href={item.href} onClick={close}>
+            {item.label}
+          </Link>
+        ))}
+        <Link href="/#download" onClick={close}>
+          Request beta
+        </Link>
+      </nav>
+    </>
   );
 }

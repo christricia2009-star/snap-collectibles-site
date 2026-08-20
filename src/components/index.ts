@@ -4,6 +4,7 @@
 export { default as Header } from "./Header";
 export { default as Hero } from "./Hero";
 export { default as Features } from "./Features";
+export { default as ProductSections } from "./ProductSections";
 export { default as WhyUs } from "./WhyUs";
 export { default as Gallery } from "./Gallery";
 export { default as HowItWorks } from "./HowItWorks";
@@ -15,5 +16,7 @@ export { default as AppStoreButton } from "./AppStoreButton";
 export { default as RequestAccessButton } from "./RequestAccessButton";
 export { default as PlatformSwitcher } from "./PlatformSwitcher";
 export { default as PhoneMockup } from "./PhoneMockup";
+export { default as Device } from "./Device";
+export { default as BetaForm } from "./BetaForm";
 export { default as SectionHeading } from "./SectionHeading";
 export { default as LegalPageShell } from "./LegalPageShell";

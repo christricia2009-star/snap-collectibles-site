@@ -21,6 +21,7 @@ export default function PrivacyPage() {
       title="Privacy Policy"
       description="This Privacy Policy explains how Snap Collectibles (“we,” “us,” or “our”) collects, uses, and shares information when you use our mobile applications and website."
       lastUpdated="August 7, 2026"
+      current="privacy"
     >
       <section className="space-y-3">
         <h2 className="text-lg font-semibold text-text">1. Who we are</h2>

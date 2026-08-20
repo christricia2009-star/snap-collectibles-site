@@ -2,6 +2,7 @@ import {
   Header,
   Hero,
   Features,
+  ProductSections,
   WhyUs,
   Gallery,
   HowItWorks,
@@ -13,32 +14,22 @@ import {
 import { PlatformProvider } from "@/lib/platform";
 
 /**
- * Snap Collectibles — Marketing landing page (single page)
- * Copy aligned to Collection Vault B15 / app v2.3 (portfolio, Hunter Mode, tools).
- *
- * Section order:
- * 1. Sticky header (platform switcher + early access)
- * 2. Hero (vault OS: scan / hunt / value / trade + soft App Store CTA)
- * 3. Features grid (B15 capabilities)
- * 4. Why Snap Collectibles (comparison)
- * 5. Screenshot gallery (platform-aware)
- * 6. How it works (Snap → Review → Vault → Hunt)
- * 7. Capability highlights
- * 8. FAQ accordion
- * 9. Final CTA
- * 10. Footer
+ * Snap Collectibles — marketing landing page.
+ * Layout language ported from BassheadOS: dark bay, display type, device frames,
+ * FormSubmit beta request. Copy aligned to Collection Vault B15 / app v2.3.
  */
 export default function HomePage() {
   return (
     <PlatformProvider>
       <Header />
-      <main>
+      <main id="main">
         <Hero />
+        <Stats />
         <Features />
+        <ProductSections />
+        <HowItWorks />
         <WhyUs />
         <Gallery />
-        <HowItWorks />
-        <Stats />
         <FAQ />
         <FinalCTA />
       </main>
